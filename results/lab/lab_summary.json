@@ -1,0 +1,538 @@
+{
+  "run": "20261111-013734",
+  "requests": {
+    "benign": 2199,
+    "explore": 412,
+    "path-traversal": 710,
+    "probe": 1181,
+    "other-injection": 2260,
+    "xss": 241,
+    "sqli": 1991,
+    "cmdi": 980
+  },
+  "payload_bearing": {
+    "benign": 149,
+    "explore": 2,
+    "path-traversal": 354,
+    "other-injection": 1908,
+    "xss": 79,
+    "sqli": 1746,
+    "probe": 14,
+    "cmdi": 926
+  },
+  "zap_rules_seen": 40,
+  "zap_scan_minutes": 3.5,
+  "timing": {
+    "ai_ms_per_request": 0.71,
+    "sig_ms_per_request": 0.06
+  },
+  "detection": [
+    {
+      "Detector": "AI prototype (payload ensemble)",
+      "FPR benign": 0.0045,
+      "FPR explore": 0.0024,
+      "Recall sqli": 0.8448,
+      "Recall xss": 0.3071,
+      "Recall path-traversal": 0.7493,
+      "Recall cmdi": 0.7714,
+      "Recall other-injection": 0.6248,
+      "Recall probe": 0.0008,
+      "Recall sqli (payload-bearing)": 0.949,
+      "Recall xss (payload-bearing)": 0.9367,
+      "Recall path-traversal (payload-bearing)": 0.8164,
+      "Recall cmdi (payload-bearing)": 0.7873,
+      "Recall other-injection (payload-bearing)": 0.7348,
+      "Campaigns detected (core)": 0.6146
+    },
+    {
+      "Detector": "Signature rules (CRS-style)",
+      "FPR benign": 0.0,
+      "FPR explore": 0.0,
+      "Recall sqli": 0.6499,
+      "Recall xss": 0.3071,
+      "Recall path-traversal": 0.1972,
+      "Recall cmdi": 0.4,
+      "Recall other-injection": 0.3345,
+      "Recall probe": 0.0008,
+      "Recall sqli (payload-bearing)": 0.7268,
+      "Recall xss (payload-bearing)": 0.9367,
+      "Recall path-traversal (payload-bearing)": 0.3192,
+      "Recall cmdi (payload-bearing)": 0.3942,
+      "Recall other-injection (payload-bearing)": 0.3962,
+      "Campaigns detected (core)": 0.4531
+    },
+    {
+      "Detector": "CSIC-trained XGBoost (whole request)",
+      "FPR benign": 0.9131,
+      "FPR explore": 0.9976,
+      "Recall sqli": 0.9985,
+      "Recall xss": 0.9544,
+      "Recall path-traversal": 0.9901,
+      "Recall cmdi": 1.0,
+      "Recall other-injection": 0.9978,
+      "Recall probe": 1.0,
+      "Recall sqli (payload-bearing)": 0.9989,
+      "Recall xss (payload-bearing)": 1.0,
+      "Recall path-traversal (payload-bearing)": 1.0,
+      "Recall cmdi (payload-bearing)": 1.0,
+      "Recall other-injection (payload-bearing)": 1.0,
+      "Campaigns detected (core)": 0.9844
+    },
+    {
+      "Detector": "CSIC-trained char-SVM (whole request)",
+      "FPR benign": 0.9986,
+      "FPR explore": 1.0,
+      "Recall sqli": 1.0,
+      "Recall xss": 1.0,
+      "Recall path-traversal": 1.0,
+      "Recall cmdi": 1.0,
+      "Recall other-injection": 0.9982,
+      "Recall probe": 1.0,
+      "Recall sqli (payload-bearing)": 1.0,
+      "Recall xss (payload-bearing)": 1.0,
+      "Recall path-traversal (payload-bearing)": 1.0,
+      "Recall cmdi (payload-bearing)": 1.0,
+      "Recall other-injection (payload-bearing)": 1.0,
+      "Campaigns detected (core)": 1.0
+    }
+  ],
+  "type_agreement": {
+    "ai": {
+      "n_flagged": 3044,
+      "type_accuracy": 0.8407,
+      "confusion": {
+        "path-traversal->path-traversal": 420,
+        "path-traversal->cmdi": 56,
+        "path-traversal->xss": 56,
+        "xss->xss": 74,
+        "sqli->path-traversal": 124,
+        "sqli->sqli": 1558,
+        "cmdi->cmdi": 507,
+        "cmdi->path-traversal": 5,
+        "cmdi->xss": 4,
+        "cmdi->sqli": 240
+      }
+    },
+    "sig": {
+      "n_flagged": 1900,
+      "type_accuracy": 0.7937,
+      "confusion": {
+        "path-traversal->path-traversal": 140,
+        "xss->xss": 74,
+        "sqli->sqli": 1294,
+        "cmdi->path-traversal": 392
+      }
+    }
+  },
+  "zap": {
+    "alert_types": 15,
+    "alert_instances": 48,
+    "unique_findings": 42,
+    "by_risk": {
+      "Low": 20,
+      "Informational": 9,
+      "Medium": 8,
+      "High": 5
+    },
+    "injection_findings": 4,
+    "alerts": [
+      "Application Error Disclosure [Low]",
+      "Authentication Request Identified [Informational]",
+      "Content Security Policy (CSP) Header Not Set [Medium]",
+      "Cross-Domain Misconfiguration [Medium]",
+      "External Redirect [High]",
+      "Information Disclosure - Suspicious Comments [Informational]",
+      "Modern Web Application [Informational]",
+      "Off-site Redirect [High]",
+      "Path Traversal [High]",
+      "Private IP Disclosure [Low]",
+      "SQL Injection [High]",
+      "Server Leaks Version Information via \"Server\" HTTP Response Header Field [Low]",
+      "Session Management Response Identified [Informational]",
+      "Timestamp Disclosure - Unix [Low]",
+      "User Agent Fuzzer [Informational]"
+    ]
+  },
+  "zap_injection_coverage": [
+    {
+      "ZAP alert": "External Redirect",
+      "risk": "High",
+      "CWE": "601",
+      "endpoint": "GET /redirect",
+      "param": "to",
+      "category": "other-injection",
+      "attack requests": 6,
+      "AI flagged": 2,
+      "AI correct class": 0,
+      "Signatures flagged": 0
+    },
+    {
+      "ZAP alert": "Path Traversal",
+      "risk": "High",
+      "CWE": "22",
+      "endpoint": "PUT /api/BasketItems/{id}",
+      "param": "quantity",
+      "category": "path-traversal",
+      "attack requests": 16,
+      "AI flagged": 14,
+      "AI correct class": 12,
+      "Signatures flagged": 5
+    },
+    {
+      "ZAP alert": "SQL Injection",
+      "risk": "High",
+      "CWE": "89",
+      "endpoint": "GET /rest/products/search",
+      "param": "q",
+      "category": "sqli",
+      "attack requests": 8,
+      "AI flagged": 7,
+      "AI correct class": 0,
+      "Signatures flagged": 0
+    },
+    {
+      "ZAP alert": "SQL Injection",
+      "risk": "High",
+      "CWE": "89",
+      "endpoint": "POST /rest/user/login",
+      "param": "email",
+      "category": "sqli",
+      "attack requests": 24,
+      "AI flagged": 19,
+      "AI correct class": 12,
+      "Signatures flagged": 11
+    }
+  ],
+  "ai_top_priorities": [
+    {
+      "endpoint": "GET /api/Products/{id}",
+      "parameter": "query:d",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 172,
+      "max_risk": 0.9999620190001679,
+      "risk_level": "High",
+      "priority": 5.1530958673305935,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/Users/",
+      "parameter": "json:securityQuestion.id",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 91,
+      "max_risk": 0.999983480096971,
+      "risk_level": "High",
+      "priority": 4.52171387754023,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/Feedbacks/",
+      "parameter": "json:captchaId",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 90,
+      "max_risk": 0.999983480096971,
+      "risk_level": "High",
+      "priority": 4.510784987555224,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/BasketItems/",
+      "parameter": "json:quantity",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 90,
+      "max_risk": 0.999983480096971,
+      "risk_level": "High",
+      "priority": 4.510784987555224,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/Addresss/",
+      "parameter": "json:mobileNum",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 89,
+      "max_risk": 0.9999802932662121,
+      "risk_level": "High",
+      "priority": 4.499720993778995,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /rest/user/login",
+      "parameter": "json:password",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 89,
+      "max_risk": 0.9999731318296633,
+      "risk_level": "High",
+      "priority": 4.49968876867756,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/Addresss/",
+      "parameter": "json:zipCode",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 89,
+      "max_risk": 0.9999707094784036,
+      "risk_level": "High",
+      "priority": 4.499677868557937,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/Addresss/",
+      "parameter": "json:fullName",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 88,
+      "max_risk": 0.9999614015411692,
+      "risk_level": "High",
+      "priority": 4.488463115286016,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "PUT /rest/products/{id}/reviews",
+      "parameter": "json:author",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 87,
+      "max_risk": 0.9999614015411692,
+      "risk_level": "High",
+      "priority": 4.477163996177501,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/Feedbacks/",
+      "parameter": "json:comment",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 87,
+      "max_risk": 0.9999614015411692,
+      "risk_level": "High",
+      "priority": 4.477163996177501,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/Addresss/",
+      "parameter": "json:country",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 86,
+      "max_risk": 0.9999726215409771,
+      "risk_level": "High",
+      "priority": 4.465785848972157,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/Users/",
+      "parameter": "json:password",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 86,
+      "max_risk": 0.9999665190646191,
+      "risk_level": "High",
+      "priority": 4.465758595873446,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/Users/",
+      "parameter": "json:passwordRepeat",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 86,
+      "max_risk": 0.9999665190646191,
+      "risk_level": "High",
+      "priority": 4.465758595873446,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/Addresss/",
+      "parameter": "json:city",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 86,
+      "max_risk": 0.9999650418980225,
+      "risk_level": "High",
+      "priority": 4.46575199898315,
+      "attack_type": "sqli"
+    },
+    {
+      "endpoint": "POST /api/Users/",
+      "parameter": "json:securityAnswer",
+      "vulnerability": "SQL injection (CWE-89)",
+      "requests": 86,
+      "max_risk": 0.9999643442292052,
+      "risk_level": "High",
+      "priority": 4.465748883258314,
+      "attack_type": "sqli"
+    }
+  ],
+  "examples": {
+    "ai_false_positives": [
+      {
+        "truth": "benign",
+        "plugin": null,
+        "request": "POST /api/Feedbacks/ {\"captchaId\": 0, \"captcha\": \"-21\", \"comment\": \"Good value for money.\", \"rating\": 5}",
+        "ai_prob": 0.983,
+        "ai_type": "sqli",
+        "parameter": "json:captcha",
+        "signature": 0
+      },
+      {
+        "truth": "benign",
+        "plugin": null,
+        "request": "POST /api/Feedbacks/ {\"captchaId\": 1, \"captcha\": \"-17\", \"comment\": \"Mmm, \\\"organic\\\" & delicious\", \"rating\": 5}",
+        "ai_prob": 0.964,
+        "ai_type": "sqli",
+        "parameter": "json:captcha",
+        "signature": 0
+      },
+      {
+        "truth": "benign",
+        "plugin": null,
+        "request": "POST /api/Feedbacks/ {\"captchaId\": 2, \"captcha\": \"-12\", \"comment\": \"Wasn't sure at first... now I'm a fan!\", \"rating\": 3}",
+        "ai_prob": 0.978,
+        "ai_type": "sqli",
+        "parameter": "json:captcha",
+        "signature": 0
+      },
+      {
+        "truth": "benign",
+        "plugin": null,
+        "request": "POST /api/Feedbacks/ {\"captchaId\": 3, \"captcha\": \"-2\", \"comment\": \"Great taste, will buy again.\", \"rating\": 3}",
+        "ai_prob": 0.982,
+        "ai_type": "sqli",
+        "parameter": "json:captcha",
+        "signature": 0
+      },
+      {
+        "truth": "benign",
+        "plugin": null,
+        "request": "POST /api/Feedbacks/ {\"captchaId\": 7, \"captcha\": \"-37\", \"comment\": \"Wasn't sure at first... now I'm a fan!\", \"rating\": 3}",
+        "ai_prob": 0.976,
+        "ai_type": "sqli",
+        "parameter": "json:captcha",
+        "signature": 0
+      },
+      {
+        "truth": "benign",
+        "plugin": null,
+        "request": "POST /api/Feedbacks/ {\"captchaId\": 9, \"captcha\": \"-11\", \"comment\": \"Love the packaging!\", \"rating\": 4}",
+        "ai_prob": 0.987,
+        "ai_type": "sqli",
+        "parameter": "json:captcha",
+        "signature": 0
+      },
+      {
+        "truth": "benign",
+        "plugin": null,
+        "request": "POST /api/Feedbacks/ {\"captchaId\": 10, \"captcha\": \"-61\", \"comment\": \"Great taste, will buy again.\", \"rating\": 5}",
+        "ai_prob": 0.984,
+        "ai_type": "sqli",
+        "parameter": "json:captcha",
+        "signature": 0
+      },
+      {
+        "truth": "benign",
+        "plugin": null,
+        "request": "POST /api/Feedbacks/ {\"captchaId\": 16, \"captcha\": \"-2\", \"comment\": \"Could you add more vegan options?\", \"rating\": 3}",
+        "ai_prob": 0.982,
+        "ai_type": "sqli",
+        "parameter": "json:captcha",
+        "signature": 0
+      }
+    ],
+    "ai_false_negatives": [
+      {
+        "truth": "cmdi",
+        "plugin": 90037,
+        "request": "POST /api/BasketItems/ {\"ProductId\": 3, \"BasketId\": \"6'|timeout /T 15.0\", \"quantity\": 1}",
+        "ai_prob": 0.491,
+        "ai_type": "norm",
+        "parameter": "json:BasketId",
+        "signature": 0
+      },
+      {
+        "truth": "path-traversal",
+        "plugin": 7,
+        "request": "POST /api/Users/ {\"email\":\"new@example.com\",\"password\":\"Secret-123\",\"passwordRepeat\":\"Secret-123\",\"securityQuestion\":{\"id\":1},\"securityAnswer\":\"www.google.com/\"}",
+        "ai_prob": 0.414,
+        "ai_type": "norm",
+        "parameter": "json:securityAnswer",
+        "signature": 0
+      },
+      {
+        "truth": "sqli",
+        "plugin": 40024,
+        "request": "POST /api/Feedbacks/ {\"captchaId\":1,\"captcha\":\"sfrel5tkg86iqsmoyjosesj71gahlcphwsonxho0yqaaz80z3coavdgl7\",\"comment\":\"Nice shop\",\"rating\":4}",
+        "ai_prob": 0.012,
+        "ai_type": "norm",
+        "parameter": "json:captchaId",
+        "signature": 0
+      },
+      {
+        "truth": "cmdi",
+        "plugin": 90020,
+        "request": "POST /api/Addresss/ {\"country\": \"Germany\", \"fullName\": \"John Smith\", \"mobileNum\": 185675980, \"zipCode\": \"40512\", \"streetAddress\": \"26 Main St.;get-help #\", \"city\": \"Boston\", \"state",
+        "ai_prob": 0.071,
+        "ai_type": "norm",
+        "parameter": "json:streetAddress",
+        "signature": 0
+      },
+      {
+        "truth": "xss",
+        "plugin": 40017,
+        "request": "GET /api/Quantitys/",
+        "ai_prob": 0.0,
+        "ai_type": "norm",
+        "parameter": "<none>",
+        "signature": 0
+      },
+      {
+        "truth": "cmdi",
+        "plugin": 90020,
+        "request": "POST /rest/user/login {\"email\": \"anna.4905@example.com&type %SYSTEMROOT%\\\\win.ini\", \"password\": \"Juice-198246!\"}",
+        "ai_prob": 0.5,
+        "ai_type": "norm",
+        "parameter": "json:email",
+        "signature": 1
+      },
+      {
+        "truth": "xss",
+        "plugin": 40017,
+        "request": "GET /rest/products/3/reviews",
+        "ai_prob": 0.0,
+        "ai_type": "norm",
+        "parameter": "<none>",
+        "signature": 0
+      },
+      {
+        "truth": "path-traversal",
+        "plugin": 7,
+        "request": "POST /api/BasketItems/ {\"ProductId\": \"www.google.com:80/search?q=ZAP\", \"BasketId\": \"6\", \"quantity\": 1}",
+        "ai_prob": 0.46,
+        "ai_type": "norm",
+        "parameter": "json:ProductId",
+        "signature": 0
+      }
+    ],
+    "signature_false_positives": [],
+    "ai_fn_by_plugin": {
+      "SQL Injection": 188,
+      "Remote File Inclusion": 140,
+      "SQL Injection - SQLite": 121,
+      "Remote OS Command Injection (Time Based)": 114,
+      "Remote OS Command Injection": 110,
+      "Cross Site Scripting (Persistent) - Spider": 97,
+      "Cross Site Scripting (Reflected)": 42,
+      "Path Traversal": 38,
+      "Cross Site Scripting (Persistent) - Prime": 28
+    }
+  },
+  "zap_log_tail": [
+    "Job spider found 145 URLs",
+    "Job spider finished, time taken: 00:00:06",
+    "Job passiveScan-wait started",
+    "Job passiveScan-wait finished, time taken: 00:00:01",
+    "Job activeScan started",
+    "Job activeScan finished, time taken: 00:03:15",
+    "Job passiveScan-wait started",
+    "Job passiveScan-wait finished, time taken: 00:00:00",
+    "Job report started",
+    "Job report generated report D:\\AI-Assisted-Web-Application-Penetration-Testing\\lab\\runs\\20261111-013734\\zap_report.json",
+    "Job report finished, time taken: 00:00:00",
+    "Job report started",
+    "Job report generated report D:\\AI-Assisted-Web-Application-Penetration-Testing\\lab\\runs\\20261111-013734\\zap_report.html",
+    "Job report finished, time taken: 00:00:00",
+    "Automation plan succeeded!"
+  ],
+  "lab_duration_minutes": 4.6
+}

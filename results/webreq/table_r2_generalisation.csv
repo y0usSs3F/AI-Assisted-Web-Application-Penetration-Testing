@@ -1,0 +1,7 @@
+Detector,norm,sqli,xss,path-traversal,cmdi,attack_recall
+Logistic Regression (features),0.4021,1.0,1.0,1.0,1.0,1.0
+Random Forest (features),0.6391,1.0,1.0,1.0,1.0,1.0
+XGBoost (features),0.3581,1.0,1.0,1.0,1.0,1.0
+Char n-gram TF-IDF + SVM (NLP),1.0,1.0,1.0,1.0,1.0,1.0
+Hybrid: char n-grams + features (SVM),0.4279,1.0,1.0,1.0,1.0,1.0
+Signature rules (conventional WAF),0.0,0.8504,0.8644,0.5258,0.3333,0.8391

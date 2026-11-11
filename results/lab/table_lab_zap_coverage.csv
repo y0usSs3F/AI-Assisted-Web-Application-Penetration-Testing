@@ -1,0 +1,5 @@
+ZAP alert,risk,CWE,endpoint,param,category,attack requests,AI flagged,AI correct class,Signatures flagged
+External Redirect,High,601,GET /redirect,to,other-injection,6,2,0,0
+Path Traversal,High,22,PUT /api/BasketItems/{id},quantity,path-traversal,16,14,12,5
+SQL Injection,High,89,GET /rest/products/search,q,sqli,8,7,0,0
+SQL Injection,High,89,POST /rest/user/login,email,sqli,24,19,12,11

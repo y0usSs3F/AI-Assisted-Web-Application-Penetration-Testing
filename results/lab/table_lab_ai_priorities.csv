@@ -1,0 +1,167 @@
+endpoint,parameter,vulnerability,requests,max_risk,risk_level,priority,attack_type
+GET /api/Products/{id},query:d,SQL injection (CWE-89),172,0.9999620190001679,High,5.1530958673305935,sqli
+POST /api/Users/,json:securityQuestion.id,SQL injection (CWE-89),91,0.999983480096971,High,4.52171387754023,sqli
+POST /api/Feedbacks/,json:captchaId,SQL injection (CWE-89),90,0.999983480096971,High,4.510784987555224,sqli
+POST /api/BasketItems/,json:quantity,SQL injection (CWE-89),90,0.999983480096971,High,4.510784987555224,sqli
+POST /api/Addresss/,json:mobileNum,SQL injection (CWE-89),89,0.9999802932662121,High,4.499720993778995,sqli
+POST /rest/user/login,json:password,SQL injection (CWE-89),89,0.9999731318296633,High,4.49968876867756,sqli
+POST /api/Addresss/,json:zipCode,SQL injection (CWE-89),89,0.9999707094784036,High,4.499677868557937,sqli
+POST /api/Addresss/,json:fullName,SQL injection (CWE-89),88,0.9999614015411692,High,4.488463115286016,sqli
+PUT /rest/products/{id}/reviews,json:author,SQL injection (CWE-89),87,0.9999614015411692,High,4.477163996177501,sqli
+POST /api/Feedbacks/,json:comment,SQL injection (CWE-89),87,0.9999614015411692,High,4.477163996177501,sqli
+POST /api/Addresss/,json:country,SQL injection (CWE-89),86,0.9999726215409771,High,4.465785848972157,sqli
+POST /api/Users/,json:password,SQL injection (CWE-89),86,0.9999665190646191,High,4.465758595873446,sqli
+POST /api/Users/,json:passwordRepeat,SQL injection (CWE-89),86,0.9999665190646191,High,4.465758595873446,sqli
+POST /api/Addresss/,json:city,SQL injection (CWE-89),86,0.9999650418980225,High,4.46575199898315,sqli
+POST /api/Users/,json:securityAnswer,SQL injection (CWE-89),86,0.9999643442292052,High,4.465748883258314,sqli
+PUT /rest/products/{id}/reviews,json:message,SQL injection (CWE-89),86,0.9999614015411692,High,4.465735741483924,sqli
+POST /api/Addresss/,json:streetAddress,SQL injection (CWE-89),86,0.9999614015411692,High,4.465735741483924,sqli
+GET /redirect,query:to,SQL injection (CWE-89),86,0.9999614015411692,High,4.465735741483924,sqli
+POST /api/Users/,json:email,SQL injection (CWE-89),85,0.9999614015411692,High,4.454175365312775,sqli
+POST /api/Feedbacks/,json:captcha,SQL injection (CWE-89),84,0.9999614015411692,High,4.4424797769986935,sqli
+POST /api/BasketItems/,json:ProductId,SQL injection (CWE-89),84,0.9999614015411692,High,4.4424797769986935,sqli
+POST /api/Feedbacks/,json:rating,SQL injection (CWE-89),84,0.9999614015411692,High,4.4424797769986935,sqli
+PUT /api/BasketItems/{id},json:quantity,SQL injection (CWE-89),84,0.9999614015411692,High,4.4424797769986935,sqli
+POST /api/BasketItems/,json:BasketId,SQL injection (CWE-89),84,0.9999614015411692,High,4.4424797769986935,sqli
+POST /api/Addresss/,json:state,SQL injection (CWE-89),80,0.9999654847041127,High,4.394297478959604,sqli
+POST /rest/user/login,json:email,SQL injection (CWE-89),75,0.9999614015411692,High,4.330566180653789,sqli
+GET /rest/products/search,query:q,SQL injection (CWE-89),69,0.9999654847041127,High,4.248348603979005,sqli
+GET /api/Products/{id},query:d,OS command injection (CWE-78),46,0.9974537204237018,High,3.8403440495060908,cmdi
+POST /api/Addresss/,json:state,OS command injection (CWE-78),37,0.9996026271767455,High,3.636140681844264,cmdi
+GET /rest/products/search,query:q,OS command injection (CWE-78),37,0.9996026271767455,High,3.636140681844264,cmdi
+PUT /api/BasketItems/{id},json:quantity,OS command injection (CWE-78),32,0.9974537204237018,High,3.487604475674346,cmdi
+POST /api/BasketItems/,json:ProductId,OS command injection (CWE-78),31,0.9974537204237018,High,3.4569111702535844,cmdi
+POST /api/BasketItems/,json:quantity,OS command injection (CWE-78),30,0.9988775992007982,High,3.4301328945023832,cmdi
+POST /api/Users/,json:securityQuestion.id,OS command injection (CWE-78),30,0.9988775992007982,High,3.4301328945023832,cmdi
+POST /api/Feedbacks/,json:rating,OS command injection (CWE-78),30,0.9974537204237018,High,3.4252433130010966,cmdi
+POST /api/Feedbacks/,json:captcha,OS command injection (CWE-78),30,0.9974537204237018,High,3.4252433130010966,cmdi
+POST /api/Feedbacks/,json:captchaId,OS command injection (CWE-78),29,0.9988775992007982,High,3.3973798750027346,cmdi
+POST /api/BasketItems/,json:BasketId,OS command injection (CWE-78),29,0.9974537204237018,High,3.39253698223427,cmdi
+POST /api/Users/,json:email,OS command injection (CWE-78),26,0.9974537204237018,High,3.2874447439056116,cmdi
+POST /rest/user/login,json:password,OS command injection (CWE-78),25,0.9974537204237018,High,3.2498005133491104,cmdi
+POST /api/Addresss/,json:country,OS command injection (CWE-78),25,0.9974537204237018,High,3.2498005133491104,cmdi
+POST /api/Addresss/,json:zipCode,OS command injection (CWE-78),25,0.9974537204237018,High,3.2498005133491104,cmdi
+POST /api/Addresss/,json:mobileNum,OS command injection (CWE-78),24,0.9974537204237018,High,3.2106796670966986,cmdi
+POST /api/Addresss/,json:streetAddress,OS command injection (CWE-78),24,0.9974537204237018,High,3.2106796670966986,cmdi
+POST /api/Users/,json:securityAnswer,OS command injection (CWE-78),24,0.9974537204237018,High,3.2106796670966986,cmdi
+POST /api/Addresss/,json:city,OS command injection (CWE-78),24,0.9974537204237018,High,3.2106796670966986,cmdi
+POST /api/Users/,json:passwordRepeat,OS command injection (CWE-78),24,0.9974537204237018,High,3.2106796670966986,cmdi
+POST /api/Users/,json:password,OS command injection (CWE-78),23,0.9974537204237018,High,3.1699616167873548,cmdi
+PUT /rest/products/{id}/reviews,json:message,OS command injection (CWE-78),22,0.9974537204237018,High,3.127510371045528,cmdi
+POST /api/Feedbacks/,json:comment,OS command injection (CWE-78),22,0.9974537204237018,High,3.127510371045528,cmdi
+POST /api/Addresss/,json:fullName,OS command injection (CWE-78),22,0.9974537204237018,High,3.127510371045528,cmdi
+PUT /rest/products/{id}/reviews,json:author,OS command injection (CWE-78),21,0.9974537204237018,High,3.0831717950898594,cmdi
+POST /rest/user/login,json:email,OS command injection (CWE-78),21,0.9974537204237018,High,3.0831717950898594,cmdi
+GET /api/Products/{id},query:d,Path traversal (CWE-22),44,0.7998384896119308,High,3.0447151762802847,path-traversal
+GET /redirect,query:to,OS command injection (CWE-78),20,0.9974537204237018,High,3.0367702324206665,cmdi
+GET /api/Products/{id},query:d,Cross-site scripting (CWE-79),49,0.6999968834390173,Medium,2.73840391174144,xss
+POST /api/Addresss/,json:state,Path traversal (CWE-22),26,0.7998384896119308,High,2.6361371809122223,path-traversal
+GET /rest/products/search,query:q,Path traversal (CWE-22),25,0.7998384896119308,High,2.605951013980963,path-traversal
+POST /api/Addresss/,json:mobileNum,Path traversal (CWE-22),24,0.7998384896119308,High,2.5745807780109393,path-traversal
+POST /rest/user/login,json:password,Path traversal (CWE-22),24,0.7998384896119308,High,2.5745807780109393,path-traversal
+POST /api/Users/,json:password,Path traversal (CWE-22),23,0.7998384896119308,High,2.5419297755709125,path-traversal
+POST /api/Users/,json:securityQuestion.id,Path traversal (CWE-22),23,0.7998384896119308,High,2.5419297755709125,path-traversal
+POST /api/BasketItems/,json:quantity,Path traversal (CWE-22),23,0.7998384896119308,High,2.5419297755709125,path-traversal
+POST /api/Users/,json:securityAnswer,Path traversal (CWE-22),23,0.7998384896119308,High,2.5419297755709125,path-traversal
+POST /api/Feedbacks/,json:captchaId,Path traversal (CWE-22),23,0.7998384896119308,High,2.5419297755709125,path-traversal
+POST /api/Users/,json:passwordRepeat,Path traversal (CWE-22),23,0.7998384896119308,High,2.5419297755709125,path-traversal
+GET /redirect,query:to,Path traversal (CWE-22),23,0.7998384896119308,High,2.5419297755709125,path-traversal
+GET /redirect,query:to,Cross-site scripting (CWE-79),35,0.6999965804886562,Medium,2.508451003035616,xss
+POST /api/Addresss/,json:streetAddress,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+POST /api/Addresss/,json:fullName,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+PUT /rest/products/{id}/reviews,json:message,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+PUT /rest/products/{id}/reviews,json:author,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+PUT /api/BasketItems/{id},json:quantity,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+POST /api/Feedbacks/,json:rating,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+POST /api/BasketItems/,json:ProductId,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+POST /api/BasketItems/,json:BasketId,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+POST /api/Feedbacks/,json:captcha,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+POST /api/Addresss/,json:zipCode,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+POST /api/Feedbacks/,json:comment,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+POST /api/Users/,json:email,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+POST /api/Addresss/,json:country,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+POST /api/Addresss/,json:city,Path traversal (CWE-22),22,0.7998384896119308,High,2.5078889578557164,path-traversal
+POST /rest/user/login,json:email,Path traversal (CWE-22),19,0.7998384896119308,High,2.39610197696114,path-traversal
+GET /rest/products/search,query:q,Cross-site scripting (CWE-79),25,0.6999968834390173,Medium,2.2806574225584892,xss
+POST /rest/user/login,json:email,Cross-site scripting (CWE-79),24,0.6999968834390173,Medium,2.253203045584937,xss
+POST /api/BasketItems/,json:ProductId,Cross-site scripting (CWE-79),24,0.6999968834390173,Medium,2.253203045584937,xss
+POST /api/Feedbacks/,json:captchaId,Cross-site scripting (CWE-79),24,0.6999968834390173,Medium,2.253203045584937,xss
+POST /api/Users/,json:email,Cross-site scripting (CWE-79),23,0.6999976005072804,Medium,2.224630055526534,xss
+POST /api/Addresss/,json:country,Cross-site scripting (CWE-79),22,0.6999976005072804,Medium,2.1948384275548616,xss
+PUT /rest/products/{id}/reviews,json:message,Cross-site scripting (CWE-79),22,0.6996945510145336,Medium,2.1938882176232135,xss
+POST /api/Users/,json:password,Cross-site scripting (CWE-79),21,0.6999968834390173,Medium,2.1637200839285153,xss
+PUT /api/BasketItems/{id},json:quantity,Cross-site scripting (CWE-79),21,0.6996945510145336,Medium,2.162785561569409,xss
+POST /api/Addresss/,json:zipCode,Cross-site scripting (CWE-79),20,0.6999976005072804,Medium,2.131158401096972,xss
+POST /api/BasketItems/,json:BasketId,Cross-site scripting (CWE-79),20,0.6999968834390173,Medium,2.1311562179665557,xss
+POST /rest/user/login,json:password,Cross-site scripting (CWE-79),20,0.6999968834390173,Medium,2.1311562179665557,xss
+POST /api/Feedbacks/,json:captcha,Cross-site scripting (CWE-79),20,0.6999968834390173,Medium,2.1311562179665557,xss
+POST /api/Addresss/,json:fullName,Cross-site scripting (CWE-79),18,0.6999976005072804,Medium,2.0611002202566144,xss
+POST /api/Users/,json:passwordRepeat,Cross-site scripting (CWE-79),17,0.6999968834390173,Medium,2.023251222507469,xss
+POST /api/Feedbacks/,json:comment,Cross-site scripting (CWE-79),17,0.6999968834390173,Medium,2.023251222507469,xss
+POST /api/Users/,json:securityAnswer,Cross-site scripting (CWE-79),17,0.6999968834390173,Medium,2.023251222507469,xss
+PUT /rest/products/{id}/reviews,json:author,Cross-site scripting (CWE-79),17,0.6996945510145336,Medium,2.0223773694062452,xss
+POST /api/Addresss/,json:mobileNum,Cross-site scripting (CWE-79),16,0.6999968834390173,Medium,1.9832405109571876,xss
+POST /api/Feedbacks/,json:rating,Cross-site scripting (CWE-79),16,0.6999968834390173,Medium,1.9832405109571876,xss
+POST /api/BasketItems/,json:quantity,Cross-site scripting (CWE-79),16,0.6999968834390173,Medium,1.9832405109571876,xss
+POST /api/Users/,json:securityQuestion.id,Cross-site scripting (CWE-79),16,0.6999968834390173,Medium,1.9832405109571876,xss
+POST /api/Addresss/,json:streetAddress,Cross-site scripting (CWE-79),15,0.6999976005072804,Medium,1.9408054527613934,xss
+POST /api/Addresss/,json:state,Cross-site scripting (CWE-79),15,0.6999976005072804,Medium,1.9408054527613934,xss
+POST /api/Addresss/,json:city,Cross-site scripting (CWE-79),15,0.6999976005072804,Medium,1.9408054527613934,xss
+POST /rest/products/{id}/reviews,body:<raw>,Cross-site scripting (CWE-79),6,0.6861575616852617,Medium,1.3352009631343977,xss
+POST /,body:<raw>,Cross-site scripting (CWE-79),4,0.6861575616852617,Medium,1.1043279936796,xss
+POST /rest/track-order/{id},body:<raw>,Cross-site scripting (CWE-79),4,0.6861575616852617,Medium,1.1043279936796,xss
+POST /rest/user/login,body:<raw>,Cross-site scripting (CWE-79),4,0.6861575616852617,Medium,1.1043279936796,xss
+POST /api/Addresss/,body:<raw>,Cross-site scripting (CWE-79),4,0.6861575616852617,Medium,1.1043279936796,xss
+POST /rest/products/{id},body:<raw>,Cross-site scripting (CWE-79),4,0.6861575616852617,Medium,1.1043279936796,xss
+POST /api/Products/{id},body:<raw>,Cross-site scripting (CWE-79),4,0.6861575616852617,Medium,1.1043279936796,xss
+POST /api/BasketItems/{id},body:<raw>,Cross-site scripting (CWE-79),4,0.6861575616852617,Medium,1.1043279936796,xss
+POST /api/Users/,body:<raw>,Cross-site scripting (CWE-79),4,0.6861575616852617,Medium,1.1043279936796,xss
+POST /api/BasketItems/,body:<raw>,Cross-site scripting (CWE-79),4,0.6861575616852617,Medium,1.1043279936796,xss
+POST /rest/memories/,body:<raw>,Cross-site scripting (CWE-79),3,0.6861575616852617,Medium,0.9512163586040517,xss
+POST /api/Addresss,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /api,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /api/SecurityQuestions,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /api/Users,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /api/SecurityQuestions/,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /api/Feedbacks/,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /api/Feedbacks,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /api/BasketItems,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /api/Quantitys/,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /api/Products,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /api/Quantitys,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /chunk-DBPdFzgj.js,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /ftp,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /assets/public,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /assets,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/products,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/products/search,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/languages,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/memories,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/deluxe-membership,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/captcha/,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/chatbot,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/chatbot/status,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/basket/{id},body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/basket,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/admin/application-version,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/captcha,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/admin/application-configuration,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /redirect,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/admin,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /chunk-Cv2YgWUq.js,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /chunk-1qQQGal7.js,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /assets/public/favicon_js.ico,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /polyfills.js,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /main.js,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /ftp/,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/user,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/track-order,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /robots.txt,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/wallet/balance,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/wallet,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rest/user/whoami,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /rolldown-runtime-BoHGiXSq.js,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /scripts.js,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /sitemap.xml,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss
+POST /styles.css,body:<raw>,Cross-site scripting (CWE-79),2,0.6861575616852617,Medium,0.753821129229975,xss

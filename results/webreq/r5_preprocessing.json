@@ -1,0 +1,488 @@
+{
+  "eda": {
+    "csic": {
+      "raw_requests": 97065,
+      "unique_requests": 34593,
+      "duplicates_removed": 62472,
+      "conflicting_labels_removed": 0,
+      "class_counts": {
+        "normal": 18640,
+        "anomalous": 15953
+      },
+      "anomalous_share": 0.4611626629664961,
+      "methods": {
+        "GET": 17977,
+        "POST": 16351,
+        "PUT": 265
+      },
+      "median_size_normal": {
+        "path_len": 28.0,
+        "query_len": 0.0,
+        "body_len": 0.0,
+        "n_params": 5.0
+      },
+      "median_size_anomalous": {
+        "path_len": 28.0,
+        "query_len": 0.0,
+        "body_len": 0.0,
+        "n_params": 5.0
+      }
+    },
+    "httpparams": {
+      "train_counts": {
+        "norm": 12870,
+        "sqli": 7235,
+        "xss": 355,
+        "path-traversal": 193,
+        "cmdi": 59
+      },
+      "test_counts": {
+        "norm": 6434,
+        "sqli": 3617,
+        "xss": 177,
+        "path-traversal": 97,
+        "cmdi": 30
+      },
+      "median_payload_len": {
+        "cmdi": 12.0,
+        "norm": 9.0,
+        "path-traversal": 31.0,
+        "sqli": 75.0,
+        "xss": 53.0
+      }
+    },
+    "top_mutual_information": [
+      [
+        "prof_new_chars",
+        0.2600687323363857
+      ],
+      [
+        "prof_len_z",
+        0.2502853415355961
+      ],
+      [
+        "entropy",
+        0.22984937477272216
+      ],
+      [
+        "prof_new_classes",
+        0.21019059243165672
+      ],
+      [
+        "class_switch_rate",
+        0.16148972630733804
+      ],
+      [
+        "alpha_ratio",
+        0.1601510104287167
+      ],
+      [
+        "nonalnum_ratio",
+        0.15514927371612086
+      ],
+      [
+        "mean_value_len",
+        0.15452407700594128
+      ],
+      [
+        "upper_ratio",
+        0.1404677204891729
+      ],
+      [
+        "digit_ratio",
+        0.1312538924895268
+      ],
+      [
+        "prof_new_params",
+        0.12321398470783818
+      ],
+      [
+        "n_tokens",
+        0.1095535854498837
+      ]
+    ],
+    "engineered_in_top12": 7,
+    "constant_features": [
+      "n_obfuscation",
+      "header_keywords",
+      "header_special",
+      "path_traversal"
+    ],
+    "redundant_pairs_r_gt_0.95": [
+      [
+        "n_params",
+        "n_spaces",
+        0.966065664863581
+      ],
+      [
+        "n_parens",
+        "n_func_calls",
+        0.9553009218788566
+      ],
+      [
+        "n_spaces",
+        "n_tokens",
+        0.9746495908028611
+      ]
+    ]
+  },
+  "ablation": [
+    {
+      "Model": "LR",
+      "Feature set": "base features (35)",
+      "CV F1": 0.7541355149996446,
+      "CV F1 std": 0.0034615774185887825,
+      "Precision": 0.8319226179562976,
+      "Recall": 0.6897039809333663,
+      "ROC-AUC": 0.8343271661022736
+    },
+    {
+      "Model": "LR",
+      "Feature set": "+ engineered (44)",
+      "CV F1": 0.7486580236736934,
+      "CV F1 std": 0.003225624524138196,
+      "Precision": 0.8284343294945383,
+      "Recall": 0.6829652434225147,
+      "ROC-AUC": 0.838520274282747
+    },
+    {
+      "Model": "LR",
+      "Feature set": "+ engineered + learned profile (49)",
+      "CV F1": 0.9839436440767197,
+      "CV F1 std": 0.0014003591008408115,
+      "Precision": 0.9957479771510312,
+      "Recall": 0.9724179986173989,
+      "ROC-AUC": 0.9954881870577162
+    },
+    {
+      "Model": "XGBoost",
+      "Feature set": "base features (35)",
+      "CV F1": 0.8788556025162396,
+      "CV F1 std": 0.0038873757560775593,
+      "Precision": 0.9475176296443536,
+      "Recall": 0.8195419796244383,
+      "ROC-AUC": 0.9647268653460916
+    },
+    {
+      "Model": "XGBoost",
+      "Feature set": "+ engineered (44)",
+      "CV F1": 0.8793765902106138,
+      "CV F1 std": 0.0028552630577298463,
+      "Precision": 0.9525948541998892,
+      "Recall": 0.8166423851956086,
+      "ROC-AUC": 0.9663467778521191
+    },
+    {
+      "Model": "XGBoost",
+      "Feature set": "+ engineered + learned profile (49)",
+      "CV F1": 0.990469240905474,
+      "CV F1 std": 0.0016761726496794553,
+      "Precision": 0.9954112039370189,
+      "Recall": 0.9855818405293668,
+      "ROC-AUC": 0.9979027777407067
+    },
+    {
+      "Model": "Char-SVM",
+      "Feature set": "char 1-4-gram TF-IDF",
+      "CV F1": 0.9841252336154943,
+      "CV F1 std": 0.0016995795023124127,
+      "Precision": 0.9968655249764717,
+      "Recall": 0.9717126694637939,
+      "ROC-AUC": 0.9985632320099667
+    },
+    {
+      "Model": "Hybrid",
+      "Feature set": "char n-grams + features (44)",
+      "CV F1": 0.9862613371965564,
+      "CV F1 std": 0.0016341999309283939,
+      "Precision": 0.9937962812841133,
+      "Recall": 0.9788433485959722,
+      "ROC-AUC": 0.9991221317200271
+    },
+    {
+      "Model": "Hybrid",
+      "Feature set": "char n-grams + features + profile (49)",
+      "CV F1": 0.988671567832111,
+      "CV F1 std": 0.0016683070377870454,
+      "Precision": 0.9959451519007839,
+      "Recall": 0.9815074035463841,
+      "ROC-AUC": 0.9983135157335441
+    }
+  ],
+  "best_params": {
+    "lr": {
+      "clf__C": 0.1,
+      "clf__l1_ratio": 1.0,
+      "clf__solver": "saga",
+      "sel": "passthrough"
+    },
+    "rf": {
+      "clf__min_samples_leaf": 1,
+      "clf__max_features": 0.6,
+      "clf__max_depth": 30
+    },
+    "xgb": {
+      "clf__subsample": 1.0,
+      "clf__reg_lambda": 10,
+      "clf__reg_alpha": 1,
+      "clf__n_estimators": 700,
+      "clf__min_child_weight": 3,
+      "clf__max_depth": 10,
+      "clf__learning_rate": 0.2,
+      "clf__gamma": 0,
+      "clf__colsample_bytree": 1.0
+    },
+    "char_svm": {
+      "clf__C": 2
+    },
+    "hybrid": {
+      "clf__C": 1
+    }
+  },
+  "tuning": [
+    {
+      "Model": "Logistic Regression (features)",
+      "Setting": "default",
+      "Inner-CV F1": NaN,
+      "Train F1": 0.9859378724080401,
+      "Test F1": 0.9829969807722867,
+      "Test FPR": 0.0024141630901287556,
+      "Test recall": 0.9692886242557192,
+      "Overfit gap (train-test F1)": 0.0029408916357533954,
+      "Parameters": "defaults"
+    },
+    {
+      "Model": "Logistic Regression (features)",
+      "Setting": "tuned",
+      "Inner-CV F1": 0.9836709288153148,
+      "Train F1": 0.986016208485619,
+      "Test F1": 0.9829969807722867,
+      "Test FPR": 0.0024141630901287556,
+      "Test recall": 0.9692886242557192,
+      "Overfit gap (train-test F1)": 0.0030192277133322953,
+      "Parameters": "{\"clf__C\": 0.1, \"clf__l1_ratio\": 1.0, \"clf__solver\": \"saga\", \"sel\": \"passthrough\"}"
+    },
+    {
+      "Model": "Random Forest (features)",
+      "Setting": "default",
+      "Inner-CV F1": NaN,
+      "Train F1": 1.0,
+      "Test F1": 0.9844493811488416,
+      "Test FPR": 0.0024141630901287556,
+      "Test recall": 0.9721090567220307,
+      "Overfit gap (train-test F1)": 0.015550618851158382,
+      "Parameters": "defaults"
+    },
+    {
+      "Model": "Random Forest (features)",
+      "Setting": "tuned",
+      "Inner-CV F1": 0.9878840118947475,
+      "Train F1": 1.0,
+      "Test F1": 0.9924480805538074,
+      "Test FPR": 0.0029506437768240345,
+      "Test recall": 0.9884048887496083,
+      "Overfit gap (train-test F1)": 0.007551919446192601,
+      "Parameters": "{\"clf__min_samples_leaf\": 1, \"clf__max_features\": 0.6, \"clf__max_depth\": 30}"
+    },
+    {
+      "Model": "XGBoost (features)",
+      "Setting": "default",
+      "Inner-CV F1": NaN,
+      "Train F1": 0.9998432601880878,
+      "Test F1": 0.9927604658482846,
+      "Test FPR": 0.0024141630901287556,
+      "Test recall": 0.9884048887496083,
+      "Overfit gap (train-test F1)": 0.007082794339803189,
+      "Parameters": "defaults"
+    },
+    {
+      "Model": "XGBoost (features)",
+      "Setting": "tuned",
+      "Inner-CV F1": 0.9886126510257803,
+      "Train F1": 0.9998824497472669,
+      "Test F1": 0.993235803051754,
+      "Test FPR": 0.0024141630901287556,
+      "Test recall": 0.9893450329050454,
+      "Overfit gap (train-test F1)": 0.006646646695512959,
+      "Parameters": "{\"clf__subsample\": 1.0, \"clf__reg_lambda\": 10, \"clf__reg_alpha\": 1, \"clf__n_estimators\": 700, \"clf__min_child_weight\": 3, \"clf__max_depth\": 10, \"clf__learning_rate\": 0.2, \"clf__gamma\": 0, \"clf__colsample_bytree\": 1.0}"
+    },
+    {
+      "Model": "Char n-gram TF-IDF + SVM (NLP)",
+      "Setting": "default",
+      "Inner-CV F1": NaN,
+      "Train F1": 0.9986681291131306,
+      "Test F1": 0.9897460167218805,
+      "Test FPR": 0.0029506437768240345,
+      "Test recall": 0.9830774052021309,
+      "Overfit gap (train-test F1)": 0.008922112391250181,
+      "Parameters": "defaults"
+    },
+    {
+      "Model": "Char n-gram TF-IDF + SVM (NLP)",
+      "Setting": "tuned",
+      "Inner-CV F1": 0.9849289032446787,
+      "Train F1": 0.9998433093074272,
+      "Test F1": 0.993876589731512,
+      "Test FPR": 0.0034871244635193135,
+      "Test recall": 0.9918520839862112,
+      "Overfit gap (train-test F1)": 0.005966719575915103,
+      "Parameters": "{\"clf__C\": 2}"
+    },
+    {
+      "Model": "Hybrid: char n-grams + features (SVM)",
+      "Setting": "default",
+      "Inner-CV F1": NaN,
+      "Train F1": 0.9989803121813475,
+      "Test F1": 0.9906954739000158,
+      "Test FPR": 0.0024141630901287556,
+      "Test recall": 0.9843309307427138,
+      "Overfit gap (train-test F1)": 0.008284838281331752,
+      "Parameters": "defaults"
+    },
+    {
+      "Model": "Hybrid: char n-grams + features (SVM)",
+      "Setting": "tuned",
+      "Inner-CV F1": 0.9901944943827227,
+      "Train F1": 1.0,
+      "Test F1": 0.9948170252866342,
+      "Test FPR": 0.0024141630901287556,
+      "Test recall": 0.9924788467565027,
+      "Overfit gap (train-test F1)": 0.005182974713365818,
+      "Parameters": "{\"clf__C\": 1}"
+    }
+  ],
+  "curves": {
+    "lr_C": {
+      "param": "C (inverse L2 strength)",
+      "values": [
+        0.01,
+        0.1,
+        1.0,
+        10.0,
+        100.0
+      ],
+      "train": [
+        0.9779044092303276,
+        0.9855727349807192,
+        0.9859969992748905,
+        0.9859969992748905,
+        0.9861190158008096
+      ],
+      "cv": [
+        0.977219835026443,
+        0.9833831254024226,
+        0.98359299291328,
+        0.98359299291328,
+        0.9835136750469307
+      ]
+    },
+    "char_svm_C": {
+      "param": "C",
+      "values": [
+        0.1,
+        0.25,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "train": [
+        0.976172664409176,
+        0.9929885578199515,
+        0.9976081567151791,
+        0.999353668154192,
+        0.9998628891216068
+      ],
+      "cv": [
+        0.9400248340295011,
+        0.9668744606630822,
+        0.9772037085016806,
+        0.9827813955817417,
+        0.9849289032446787
+      ]
+    },
+    "hybrid_C": {
+      "param": "C",
+      "values": [
+        0.05,
+        0.1,
+        0.25,
+        0.5,
+        1.0
+      ],
+      "train": [
+        0.9860361659340798,
+        0.9860361659340798,
+        0.9913851057991742,
+        0.9975846624851427,
+        1.0
+      ],
+      "cv": [
+        0.9836709288153148,
+        0.9836709288153148,
+        0.9837915902123698,
+        0.9871630364409856,
+        0.9901944943827227
+      ]
+    },
+    "xgb_depth": {
+      "param": "max_depth",
+      "values": [
+        2,
+        3,
+        4,
+        6,
+        8,
+        10,
+        14
+      ],
+      "train": [
+        0.9869435151581447,
+        0.9905879971293293,
+        0.995592515984872,
+        0.9999608188852974,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "cv": [
+        0.9837981928726472,
+        0.9854825322225406,
+        0.986486009608321,
+        0.9891690812495195,
+        0.9898025277251462,
+        0.989882824395675,
+        0.9899608512442644
+      ]
+    }
+  },
+  "payload_ablation": [
+    {
+      "Model": "LR",
+      "Feature set": "base features (35)",
+      "CV macro-F1": 0.8662918229892262,
+      "CV macro-F1 std": 0.024417789061359094,
+      "CV accuracy": 0.9907297224187028
+    },
+    {
+      "Model": "LR",
+      "Feature set": "+ engineered (44)",
+      "CV macro-F1": 0.8605670719035332,
+      "CV macro-F1 std": 0.02450243880425461,
+      "CV accuracy": 0.9902952662965333
+    },
+    {
+      "Model": "XGBoost",
+      "Feature set": "base features (35)",
+      "CV macro-F1": 0.9475561715804887,
+      "CV macro-F1 std": 0.012725850914682554,
+      "CV accuracy": 0.9978755740136569
+    },
+    {
+      "Model": "XGBoost",
+      "Feature set": "+ engineered (44)",
+      "CV macro-F1": 0.9458183650670147,
+      "CV macro-F1 std": 0.009743315895375427,
+      "CV accuracy": 0.9979721573729513
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+Model,Feature set,CV macro-F1,CV macro-F1 std,CV accuracy
+LR,base features (35),0.8663,0.0244,0.9907
+LR,+ engineered (44),0.8606,0.0245,0.9903
+XGBoost,base features (35),0.9476,0.0127,0.9979
+XGBoost,+ engineered (44),0.9458,0.0097,0.998

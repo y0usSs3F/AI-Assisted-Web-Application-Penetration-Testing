@@ -3,41 +3,48 @@ Slow-down factor,Detector,Recall (all attacks),Recall Brute Force,Recall XSS,Rec
 1,Linear SVM,0.9883,0.9966,0.9695,1.0
 1,Random Forest,0.986,0.9966,0.9618,1.0
 1,Gradient-Boosted Trees (HistGB),0.9953,1.0,0.9924,0.75
+1,XGBoost,1.0,1.0,1.0,1.0
 1,Neural Network (MLP),0.9907,1.0,0.9695,1.0
 1,Threshold IDS (conventional),0.0,0.0,0.0,0.0
 2,Logistic Regression,0.9907,1.0,0.9695,1.0
 2,Linear SVM,0.9907,1.0,0.9695,1.0
 2,Random Forest,0.0956,0.119,0.0229,0.75
 2,Gradient-Boosted Trees (HistGB),0.9184,0.9014,0.9618,0.75
+2,XGBoost,0.9464,0.9354,0.9771,0.75
 2,Neural Network (MLP),0.9883,0.9966,0.9695,1.0
 2,Threshold IDS (conventional),0.0047,0.0,0.0153,0.0
 5,Logistic Regression,0.9907,1.0,0.9695,1.0
 5,Linear SVM,0.9907,1.0,0.9695,1.0
 5,Random Forest,0.0746,0.0952,0.0229,0.25
 5,Gradient-Boosted Trees (HistGB),0.8788,0.8673,0.9084,0.75
+5,XGBoost,0.8834,0.8741,0.9084,0.75
 5,Neural Network (MLP),0.986,0.9932,0.9695,1.0
 5,Threshold IDS (conventional),0.0466,0.0612,0.0153,0.0
 10,Logistic Regression,0.9907,1.0,0.9695,1.0
 10,Linear SVM,0.9907,1.0,0.9695,1.0
 10,Random Forest,0.0536,0.0714,0.0153,0.0
 10,Gradient-Boosted Trees (HistGB),0.2797,0.2721,0.2824,0.75
+10,XGBoost,0.1399,0.1395,0.1374,0.25
 10,Neural Network (MLP),0.951,0.9626,0.9389,0.5
 10,Threshold IDS (conventional),0.0466,0.0612,0.0153,0.0
 20,Logistic Regression,0.9674,0.9728,0.9695,0.5
 20,Linear SVM,0.9674,0.9728,0.9695,0.5
 20,Random Forest,0.0466,0.0612,0.0153,0.0
 20,Gradient-Boosted Trees (HistGB),0.0163,0.017,0.0076,0.25
+20,XGBoost,0.049,0.0646,0.0153,0.0
 20,Neural Network (MLP),0.8858,0.8946,0.8855,0.25
 20,Threshold IDS (conventional),0.9347,0.9422,0.9466,0.0
 50,Logistic Regression,0.9534,0.9592,0.9618,0.25
 50,Linear SVM,0.951,0.9558,0.9618,0.25
 50,Random Forest,0.0466,0.0612,0.0153,0.0
 50,Gradient-Boosted Trees (HistGB),0.0,0.0,0.0,0.0
+50,XGBoost,0.0466,0.0612,0.0153,0.0
 50,Neural Network (MLP),0.0606,0.0714,0.0305,0.25
 50,Threshold IDS (conventional),0.9441,0.9456,0.9618,0.25
 100,Logistic Regression,0.9464,0.949,0.9618,0.25
 100,Linear SVM,0.9441,0.9456,0.9618,0.25
 100,Random Forest,0.0466,0.0612,0.0153,0.0
 100,Gradient-Boosted Trees (HistGB),0.0,0.0,0.0,0.0
+100,XGBoost,0.0466,0.0612,0.0153,0.0
 100,Neural Network (MLP),0.0536,0.0612,0.0305,0.25
 100,Threshold IDS (conventional),0.9441,0.9456,0.9618,0.25

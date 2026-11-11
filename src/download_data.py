@@ -13,15 +13,15 @@ What it fetches (CIC-IDS2017 "MachineLearningCVE" CSV release, CICFlowMeter feat
 Sources, tried in order until one succeeds:
   1. Official  -- Canadian Institute for Cybersecurity (UNB), MachineLearningCSV.zip
                   (landing page: https://www.unb.ca/cic/datasets/ids-2017.html)
-  2. Mirror    -- a public GitHub repository that stores the same release as a split
-                  .tar.xz archive; cloned with a blob-less partial clone pinned to a commit,
-                  so only the two archive parts are downloaded (~136 MB).
+  2. Mirror    -- a public GitHub repository that stores the two CSVs in Git LFS; they are
+                  fetched directly from GitHub's LFS media host at a pinned commit (~229 MB).
   3. Manual    -- if both fail, the script explains where to put the files by hand.
 
 Integrity: each file is checked against the published row/label counts (a hard check) and
 its SHA-256 is compared with the copy used for the paper (a soft check: warning only).
-Only standard-library archive modules are used (zipfile, tarfile, lzma), so it works on
-Windows, macOS and Linux. Requires `git` for the mirror source.
+Only the standard library is needed. If the optional `truststore` package is installed, the
+operating system's certificate store is used, which fixes TLS errors behind VPNs and
+TLS-inspecting proxies (e.g. Cloudflare WARP or corporate gateways).
 
 Dataset citation (requested by the authors):
   I. Sharafaldin, A. H. Lashkari, A. A. Ghorbani, "Toward Generating a New Intrusion
@@ -31,11 +31,8 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import lzma
 import shutil
-import subprocess
 import sys
-import tarfile
 import tempfile
 import urllib.request
 import zipfile
@@ -46,17 +43,21 @@ import pandas as pd
 import config
 import preprocess
 
+try:  # use the OS certificate store when available (VPNs / TLS-inspecting proxies)
+    import truststore
+    truststore.inject_into_ssl()
+except ImportError:
+    pass
+
 # --------------------------------------------------------------------------- sources
 OFFICIAL_ZIP_URLS = [
     "http://cicresearch.ca/CICDataset/CIC-IDS-2017/Dataset/CIC-IDS-2017/CSVs/MachineLearningCSV.zip",
     "http://cicresearch.ca/CICDataset/CIC-IDS-2017/Dataset/MachineLearningCSV.zip",
 ]
-MIRROR_REPO = "https://github.com/jonasyr/network-intrusion-ml-transferability.git"
 MIRROR_COMMIT = "e2352f8b74d06218cd937fc6e4abf421424e90e6"
-MIRROR_PARTS = [
-    "data/raw/cic-ids-2017/full_dataset/MachineLearningCVE.tar.xz.partaa",
-    "data/raw/cic-ids-2017/full_dataset/MachineLearningCVE.tar.xz.partab",
-]
+MIRROR_MEDIA = ("https://media.githubusercontent.com/media/jonasyr/"
+                "network-intrusion-ml-transferability/{commit}/data/raw/cic-ids-2017/"
+                "full_dataset/{name}")
 
 # --------------------------------------------------------------------------- integrity
 EXPECTED_COUNTS = {
@@ -95,9 +96,9 @@ def verify(path: Path) -> bool:
 
 
 # --------------------------------------------------------------------------- source 1
-def _download(url: str, dest: Path) -> bool:
+def _fetch(url: str, dest: Path, tag: str) -> bool:
     try:
-        print(f"  [official] GET {url}")
+        print(f"  [{tag}] GET {url}")
         req = urllib.request.Request(url, headers={"User-Agent": "research-downloader/1.0"})
         with urllib.request.urlopen(req, timeout=60) as r, open(dest, "wb") as f:
             total = int(r.headers.get("Content-Length") or 0)
@@ -106,11 +107,11 @@ def _download(url: str, dest: Path) -> bool:
                 f.write(chunk)
                 done += len(chunk)
                 if total:
-                    print(f"\r  [official] {done/1e6:7.1f} / {total/1e6:.1f} MB", end="", flush=True)
+                    print(f"\r  [{tag}] {done/1e6:7.1f} / {total/1e6:.1f} MB", end="", flush=True)
         print()
-        return zipfile.is_zipfile(dest)
+        return True
     except Exception as e:  # noqa: BLE001
-        print(f"  [official] failed: {type(e).__name__}: {e}")
+        print(f"  [{tag}] failed: {type(e).__name__}: {e}")
         return False
 
 
@@ -118,7 +119,7 @@ def from_official(raw_dir: Path) -> bool:
     with tempfile.TemporaryDirectory() as td:
         zpath = Path(td) / "MachineLearningCSV.zip"
         for url in OFFICIAL_ZIP_URLS:
-            if _download(url, zpath):
+            if _fetch(url, zpath, "official") and zipfile.is_zipfile(zpath):
                 break
         else:
             return False
@@ -135,46 +136,18 @@ def from_official(raw_dir: Path) -> bool:
 
 
 # --------------------------------------------------------------------------- source 2
-def _git(*args, cwd=None, timeout=900):
-    subprocess.run(["git", *args], cwd=cwd, check=True, timeout=timeout,
-                   stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
-
-
 def from_mirror(raw_dir: Path) -> bool:
-    if shutil.which("git") is None:
-        print("  [mirror] git is not installed")
-        return False
-    try:
-        with tempfile.TemporaryDirectory() as td:
-            repo = Path(td) / "mirror"
-            print(f"  [mirror] partial clone of {MIRROR_REPO} (metadata only)")
-            _git("clone", "--quiet", "--filter=blob:none", "--no-checkout", MIRROR_REPO, str(repo))
-            print("  [mirror] fetching the two archive parts (~136 MB) at commit "
-                  f"{MIRROR_COMMIT[:10]}")
-            _git("checkout", "--quiet", MIRROR_COMMIT, "--", *MIRROR_PARTS, cwd=repo)
-            archive = Path(td) / "MachineLearningCVE.tar.xz"
-            with open(archive, "wb") as out:
-                for part in MIRROR_PARTS:
-                    with open(repo / part, "rb") as src:
-                        shutil.copyfileobj(src, out)
-            print("  [mirror] extracting needed files from the archive")
-            with tarfile.open(archive, mode="r:xz") as tar:
-                members = {Path(m.name).name: m for m in tar.getmembers() if m.isfile()}
-                for name in NEEDED:
-                    if name in members:                        # stored as plain CSV
-                        src = tar.extractfile(members[name])
-                    elif name + ".xz" in members:              # stored xz-compressed inside
-                        src = lzma.open(tar.extractfile(members[name + ".xz"]))
-                    else:
-                        print(f"  [mirror] {name} not found in archive")
-                        return False
-                    with src, open(raw_dir / name, "wb") as dst:
-                        shutil.copyfileobj(src, dst)
-                    print(f"  [mirror] extracted {name}")
-        return True
-    except Exception as e:  # noqa: BLE001
-        print(f"  [mirror] failed: {type(e).__name__}: {e}")
-        return False
+    """Download the two CSVs from the mirror's Git LFS storage at a pinned commit."""
+    for name in NEEDED:
+        url = MIRROR_MEDIA.format(commit=MIRROR_COMMIT, name=name)
+        dest = raw_dir / name
+        if not _fetch(url, dest, "mirror"):
+            return False
+        if dest.stat().st_size < 1_000_000:          # an LFS pointer, not the data
+            print(f"  [mirror] {name}: received a Git LFS pointer instead of the file")
+            dest.unlink()
+            return False
+    return True
 
 
 # --------------------------------------------------------------------------- main

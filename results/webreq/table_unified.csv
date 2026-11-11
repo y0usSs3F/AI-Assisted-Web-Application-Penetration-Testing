@@ -1,0 +1,15 @@
+Setting,Model,F1 all,F1 CSIC 2010,F1 SR-BH 2020,FPR CSIC 2010,FPR SR-BH 2020
+pooled (80/20),Logistic Regression (features) + learned profile,0.8507,0.983,0.7742,0.0024,0.5671
+pooled (80/20),XGBoost (features) + learned profile,0.8558,0.9921,0.7765,0.0024,0.5667
+pooled (80/20),Char n-gram TF-IDF + SVM (NLP),0.9934,0.9932,0.9935,0.0038,0.0033
+pooled (80/20),Hybrid: char n-grams + features (SVM) + learned profile,0.8571,0.9947,0.7768,0.0024,0.5667
+pooled (80/20),Logistic Regression (features),0.8088,0.596,0.9258,0.0236,0.0707
+pooled (80/20),XGBoost (features),0.9604,0.9448,0.9719,0.0188,0.0176
+pooled (80/20),Hybrid: char n-grams + features (SVM),0.9943,0.9937,0.9948,0.0035,0.0028
+pooled (80/20),Signature rules (conventional WAF),0.6038,0.3385,0.7529,0.0,0.0002
+train CSIC 2010 -> test SR-BH 2020,XGBoost (features),0.6687,,0.6687,,0.9859
+train CSIC 2010 -> test SR-BH 2020,Char n-gram TF-IDF + SVM (NLP),0.6667,,0.6667,,1.0
+train CSIC 2010 -> test SR-BH 2020,Hybrid: char n-grams + features (SVM),0.6056,,0.6056,,0.9626
+train SR-BH 2020 -> test CSIC 2010,XGBoost (features),0.5658,0.5658,,0.2303,
+train SR-BH 2020 -> test CSIC 2010,Char n-gram TF-IDF + SVM (NLP),0.6152,0.6152,,0.9609,
+train SR-BH 2020 -> test CSIC 2010,Hybrid: char n-grams + features (SVM),0.5834,0.5834,,0.3667,

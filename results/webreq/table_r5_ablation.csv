@@ -1,0 +1,10 @@
+Model,Feature set,CV F1,CV F1 std,Precision,Recall,ROC-AUC
+LR,base features (35),0.7541,0.0035,0.8319,0.6897,0.8343
+LR,+ engineered (44),0.7487,0.0032,0.8284,0.683,0.8385
+LR,+ engineered + learned profile (49),0.9839,0.0014,0.9957,0.9724,0.9955
+XGBoost,base features (35),0.8789,0.0039,0.9475,0.8195,0.9647
+XGBoost,+ engineered (44),0.8794,0.0029,0.9526,0.8166,0.9663
+XGBoost,+ engineered + learned profile (49),0.9905,0.0017,0.9954,0.9856,0.9979
+Char-SVM,char 1-4-gram TF-IDF,0.9841,0.0017,0.9969,0.9717,0.9986
+Hybrid,char n-grams + features (44),0.9863,0.0016,0.9938,0.9788,0.9991
+Hybrid,char n-grams + features + profile (49),0.9887,0.0017,0.9959,0.9815,0.9983

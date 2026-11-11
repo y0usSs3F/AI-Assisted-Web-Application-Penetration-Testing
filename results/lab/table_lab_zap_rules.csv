@@ -1,0 +1,41 @@
+plugin,rule,category,requests,AI detection rate,Signature detection rate
+90020,Remote OS Command Injection,cmdi,532,0.7932,0.7368
+90037,Remote OS Command Injection (Time Based),cmdi,448,0.7455,0.0
+90035,Server Side Template Injection,other-injection,392,0.4923,0.5
+90036,Server Side Template Injection (Blind),other-injection,336,1.0,0.5833
+20019,External Redirect,other-injection,249,0.5703,0.0
+90019,Server Side Code Injection,other-injection,224,1.0,0.25
+40003,CRLF Injection,other-injection,196,0.0,0.5714
+40045,Spring4Shell,other-injection,143,0.0,0.0
+20018,Remote Code Execution - CVE-2012-1823,other-injection,138,1.0,0.5
+40008,Parameter Tampering,other-injection,118,0.1271,0.1271
+40009,Server Side Include,other-injection,112,1.0,1.0
+90017,XSLT Injection,other-injection,112,1.0,0.0
+90021,XPath Injection,other-injection,84,1.0,0.0
+30002,Format String Error,other-injection,75,0.0,0.0
+10048,Remote Code Execution - Shell Shock,other-injection,56,1.0,0.0
+30001,Buffer Overflow,other-injection,25,0.0,0.0
+6,Path Traversal,path-traversal,430,0.9116,0.3256
+7,Remote File Inclusion,path-traversal,280,0.5,0.0
+10104,User Agent Fuzzer,probe,852,0.0,0.0
+10045,Source Code Disclosure - /WEB-INF,probe,91,0.0,0.0
+0,Directory Browsing,probe,69,0.0,0.0
+40035,Hidden File Finder,probe,52,0.0,0.0
+20017,Source Code Disclosure - CVE-2012-1823,probe,32,0.0,0.0
+40029,Trace.axd Information Leak,probe,24,0.0,0.0
+40032,.htaccess Information Leak,probe,24,0.0,0.0
+40034,.env Information Leak,probe,24,0.0,0.0
+90034,Cloud Metadata Potentially Exposed,probe,9,0.0,0.0
+40042,Spring Actuator Information Leak,probe,2,0.0,0.0
+40028,ELMAH Information Leak,probe,1,0.0,0.0
+40048,rule 40048,probe,1,1.0,1.0
+40018,SQL Injection,sqli,610,0.6918,0.4689
+40019,SQL Injection - MySQL,sqli,280,1.0,1.0
+40020,SQL Injection - Hypersonic SQL,sqli,280,1.0,0.6
+40027,SQL Injection - MsSQL,sqli,280,1.0,1.0
+40024,SQL Injection - SQLite,sqli,261,0.5364,0.0
+40021,SQL Injection - Oracle,sqli,140,1.0,1.0
+40022,SQL Injection - PostgreSQL,sqli,140,1.0,1.0
+40012,Cross Site Scripting (Reflected),xss,116,0.6379,0.6379
+40017,Cross Site Scripting (Persistent) - Spider,xss,97,0.0,0.0
+40016,Cross Site Scripting (Persistent) - Prime,xss,28,0.0,0.0
