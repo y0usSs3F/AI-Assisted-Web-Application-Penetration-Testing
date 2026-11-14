@@ -155,6 +155,9 @@ Only public datasets are used. The lab starts an intentionally vulnerable applic
 
 The full list with DOIs is in [`paper/references.md`](paper/references.md). The key ones:
 
+- Fasla & Mehmood, *Artificial Intelligence Review* 2026 (systematic review; the paper maps its open issues to our work)
+- Wang & D'Cruze, ITNG 2024 (ChatGPT-4-assisted pentesting)
+- Khairmode et al., ICOSICS 2026 (AutoRed: Nmap + CVE retrieval + LLM)
 - Sharafaldin et al., ICISSP 2018 (CIC-IDS2017)
 - Engelen et al., IEEE SPW 2021
 - Kruegel & Vigna, ACM CCS 2003

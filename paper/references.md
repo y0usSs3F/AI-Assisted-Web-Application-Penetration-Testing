@@ -1,5 +1,14 @@
 # References the project builds on (IEEE style)
 
+## Core references (the paper is framed on these)
+0a. H. Fasla and A. Mehmood, "Explainable artificial intelligence for web application threat detection: A systematic review," *Artificial Intelligence Review*, vol. 59, art. 201, 2026, doi: 10.1007/s10462-026-11581-y. **Review of 81 studies. Its open issues (§9.1–9.6) are mapped to our work in Table I of the paper. Also used for the metric choice and the CIC-IDS2017 payload rating.**
+0b. P. Wang and H. D'Cruze, "AI-assisted pentesting using ChatGPT-4," in *ITNG 2024*, Advances in Intelligent Systems and Computing, vol. 1456, Springer, 2024, pp. 63–71, doi: 10.1007/978-3-031-56599-1_9. **ChatGPT-4 with LlamaIndex over Nmap and Wireshark output against bWAPP. Qualitative results only. Related work and discussion.**
+0c. P. S. Khairmode, C. Maivizhi, Raghavendra S, P. J. Sai, and S. R. M. Krishna, "AutoRed APT: Automated penetration testing tool for web applications," in *Proc. ICOSICS 2026*, IEEE, 2026, pp. 2061–2068, doi: 10.1109/ICOSICS70095.2026.11746828. **Nmap, Vulners and CVE-based retrieval feeding an LLM, with no exploitation. Related work and discussion.**
+
+Taken from the review's bibliography (not read in full):
+0d. M. Irfa'issurur and B. P. Josaphat, "Machine learning for cybersecurity: Web attack detection (brute force, XSS, SQL injection)," *InPrime: Indonesian J. Pure Appl. Math.*, vol. 7, no. 1, pp. 1–15, 2025. **RF 97.77% on CIC-IDS2017/2018 web attacks.**
+0e. A. Kim, M. Park, and D. H. Lee, "AI-IDS: Application of deep learning to real-time web intrusion detection," *IEEE Access*, vol. 8, pp. 70245–70261, 2020, doi: 10.1109/ACCESS.2020.2986882.
+
 ## Datasets
 1. I. Sharafaldin, A. H. Lashkari, and A. A. Ghorbani, "Toward generating a new intrusion detection dataset and intrusion traffic characterization," in *Proc. 4th Int. Conf. Information Systems Security and Privacy (ICISSP)*, 2018, pp. 108–116. **CIC-IDS2017, the main dataset.**
 2. C. Torrano Giménez, A. Pérez Villegas, and G. Álvarez Marañón, "HTTP data set CSIC 2010," Spanish National Research Council (CSIC), 2010. **Request-level detection.**
