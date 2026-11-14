@@ -1,0 +1,7 @@
+Model,Accuracy,Macro-F1,F1 norm,F1 sqli,F1 xss,F1 path-traversal,F1 cmdi
+Logistic Regression (features),0.9906,0.8693,0.9929,0.9993,0.9972,0.949,0.4082
+Random Forest (features),0.9981,0.9549,0.9988,0.9997,0.9972,0.9479,0.8308
+XGBoost (features),0.9983,0.9642,0.9988,0.9996,0.9972,0.9596,0.8657
+Char n-gram TF-IDF + SVM (NLP),0.9997,0.9993,0.9998,0.9997,0.9972,1.0,1.0
+Hybrid: char n-grams + features (SVM),0.9996,0.995,0.9998,0.9997,0.9972,0.9948,0.9836
+Signature rules (conventional WAF),0.9388,0.7887,0.9533,0.9188,0.9207,0.6892,0.4615

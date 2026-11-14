@@ -1,13 +1,15 @@
 # Tested with Python 3.13, scikit-learn 1.9, pandas 3.0, numpy 2.5, matplotlib 3.11
 numpy>=1.26
 pandas>=2.1
-scikit-learn>=1.4
+scikit-learn>=1.8   # LogisticRegression(l1_ratio=...) penalty API
 scipy>=1.11
 matplotlib>=3.8
 joblib>=1.3
+xgboost>=2.0        # XGBoost models (flow and request level)
+streamlit>=1.40     # prototype UI: streamlit run app/app.py
+pytest>=8
 
 # Optional
-# pytest            -> python -m pytest tests/
 # jupyter           -> notebooks/walkthrough.ipynb
-# xgboost           -> drop-in replacement for HistGradientBoostingClassifier in src/models.py
+# truststore        -> use the OS certificate store for downloads behind TLS-inspecting proxies
 # cicflowmeter      -> Python flow meter for the lab harness (or use the Java CICFlowMeter)

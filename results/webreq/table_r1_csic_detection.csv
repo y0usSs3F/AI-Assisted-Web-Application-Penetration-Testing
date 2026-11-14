@@ -1,0 +1,7 @@
+Detector,Precision,Recall,F1,ROC-AUC,FPR,CV F1,CV F1 std,Train (s),Inference (ms/req)
+Logistic Regression (features),0.9971,0.9693,0.983,0.996,0.0024,0.9839,0.0007,37.7143,0.0531
+Random Forest (features),0.9965,0.9884,0.9924,0.998,0.003,0.9919,0.0011,2.8463,0.0824
+XGBoost (features),0.9972,0.9893,0.9932,0.9984,0.0024,0.9933,0.0009,2.1746,0.0588
+Char n-gram TF-IDF + SVM (NLP),0.9959,0.9919,0.9939,0.9995,0.0035,0.9956,0.0006,11.0737,0.6775
+Hybrid: char n-grams + features (SVM),0.9972,0.9925,0.9948,0.9991,0.0024,0.9951,0.0007,31.9076,0.7569
+Signature rules (conventional WAF),1.0,0.2037,0.3385,0.6018,0.0,0.3395,0.0076,,

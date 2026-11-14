@@ -1,0 +1,5 @@
+method,url,body,label
+GET,/rest/products/search?q=apple+juice,,normal
+GET,"/rest/products/search?q=qwert')) UNION SELECT id,email,password FROM Users--",,sqli
+POST,/api/Feedbacks/,"{""comment"":""<script>alert(1)</script>"",""rating"":5}",xss
+GET,/rest/basket/6,,normal

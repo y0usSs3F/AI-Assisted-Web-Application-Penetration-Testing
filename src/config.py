@@ -37,6 +37,15 @@ MONDAY_HTTP = PROC_DIR / "monday_http.csv.gz"      # unseen benign day, HTTP flo
 FEATURES_JSON = RESULTS_DIR / "feature_list.json"  # ordered model input features
 PROFILE_JSON = RESULTS_DIR / "data_profile.json"   # row counts at every cleaning stage
 
+# Request-level datasets (src/webreq): full HTTP requests and labelled parameter payloads
+CSIC_DIR = DATA_DIR / "raw" / "csic2010"           # HTTP CSIC 2010 raw request files
+HTTPPARAMS_DIR = DATA_DIR / "raw" / "httpparams"   # HttpParamsDataset payload CSVs
+WEB_RESULTS = RESULTS_DIR / "webreq"               # request-level results, tables, figures
+LAB_DIR = ROOT / "lab"                             # practical lab: tools, runs (not committed)
+LAB_RESULTS = RESULTS_DIR / "lab"                  # lab comparison results (committed)
+for _d in (WEB_RESULTS, LAB_RESULTS):
+    _d.mkdir(parents=True, exist_ok=True)
+
 # ---------------------------------------------------------------------------
 # Experimental constants
 # ---------------------------------------------------------------------------
@@ -55,17 +64,18 @@ CLASSES = [BENIGN] + ATTACKS
 # ---------------------------------------------------------------------------
 # Models (display names used in tables and figures)
 # ---------------------------------------------------------------------------
-ML_MODELS = ["logreg", "linsvm", "rf", "hgb", "mlp"]
+ML_MODELS = ["logreg", "linsvm", "rf", "hgb", "xgb", "mlp"]
 BASELINE = "threshold_ids"
 DISPLAY = {
     "logreg": "Logistic Regression",
     "linsvm": "Linear SVM",
     "rf": "Random Forest",
     "hgb": "Gradient-Boosted Trees (HistGB)",
+    "xgb": "XGBoost",
     "mlp": "Neural Network (MLP)",
     "threshold_ids": "Threshold IDS (conventional)",
 }
 SHORT = {
     "logreg": "LogReg", "linsvm": "Lin-SVM", "rf": "RForest",
-    "hgb": "HistGB", "mlp": "MLP", "threshold_ids": "Threshold IDS",
+    "hgb": "HistGB", "xgb": "XGBoost", "mlp": "MLP", "threshold_ids": "Threshold IDS",
 }

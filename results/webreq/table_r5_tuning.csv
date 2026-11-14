@@ -1,0 +1,11 @@
+Model,Setting,Inner-CV F1,Train F1,Test F1,Test FPR,Test recall,Overfit gap (train-test F1),Parameters
+Logistic Regression (features),default,,0.9859,0.983,0.0024,0.9693,0.0029,defaults
+Logistic Regression (features),tuned,0.9837,0.986,0.983,0.0024,0.9693,0.003,"{""clf__C"": 0.1, ""clf__l1_ratio"": 1.0, ""clf__solver"": ""saga"", ""sel"": ""passthrough""}"
+Random Forest (features),default,,1.0,0.9844,0.0024,0.9721,0.0156,defaults
+Random Forest (features),tuned,0.9879,1.0,0.9924,0.003,0.9884,0.0076,"{""clf__min_samples_leaf"": 1, ""clf__max_features"": 0.6, ""clf__max_depth"": 30}"
+XGBoost (features),default,,0.9998,0.9928,0.0024,0.9884,0.0071,defaults
+XGBoost (features),tuned,0.9886,0.9999,0.9932,0.0024,0.9893,0.0066,"{""clf__subsample"": 1.0, ""clf__reg_lambda"": 10, ""clf__reg_alpha"": 1, ""clf__n_estimators"": 700, ""clf__min_child_weight"": 3, ""clf__max_depth"": 10, ""clf__learning_rate"": 0.2, ""clf__gamma"": 0, ""clf__colsample_bytree"": 1.0}"
+Char n-gram TF-IDF + SVM (NLP),default,,0.9987,0.9897,0.003,0.9831,0.0089,defaults
+Char n-gram TF-IDF + SVM (NLP),tuned,0.9849,0.9998,0.9939,0.0035,0.9919,0.006,"{""clf__C"": 2}"
+Hybrid: char n-grams + features (SVM),default,,0.999,0.9907,0.0024,0.9843,0.0083,defaults
+Hybrid: char n-grams + features (SVM),tuned,0.9902,1.0,0.9948,0.0024,0.9925,0.0052,"{""clf__C"": 1}"

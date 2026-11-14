@@ -1,0 +1,4 @@
+{"ts": 1, "phase": "benign", "method": "PUT", "path": "/api/BasketItems/9", "query": "", "headers": {"content-type": "application/json"}, "body": "{\"quantity\": 4}", "status": 200, "response_bytes": 10, "zap_scan_id": null}
+{"ts": 2, "phase": "benign", "method": "GET", "path": "/rest/products/search", "query": "q=apple", "headers": {}, "body": "", "status": 200, "response_bytes": 10, "zap_scan_id": null}
+{"ts": 3, "phase": "zap", "method": "PUT", "path": "/api/BasketItems/9", "query": "", "headers": {"content-type": "application/json"}, "body": "{\"quantity\": \"../../../../../../Windows/system.ini\"}", "status": 400, "response_bytes": 10, "zap_scan_id": "6"}
+{"ts": 4, "phase": "setup", "method": "GET", "path": "/", "query": "", "headers": {}, "body": "", "status": 200, "response_bytes": 10, "zap_scan_id": null}

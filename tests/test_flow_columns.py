@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src" / "lab_harness"))
+sys.path.insert(0, str(ROOT / "src"))
 from flow_columns import DERIVE, _FEAT_LK, _key  # noqa: E402
 
 FEATURES = json.loads((ROOT / "results" / "feature_list.json").read_text())

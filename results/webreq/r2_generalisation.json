@@ -1,0 +1,51 @@
+{
+  "lr": {
+    "norm": 0.4020826857320485,
+    "sqli": 1.0,
+    "xss": 1.0,
+    "path-traversal": 1.0,
+    "cmdi": 1.0,
+    "attack_recall": 1.0
+  },
+  "rf": {
+    "norm": 0.6391047559838359,
+    "sqli": 1.0,
+    "xss": 1.0,
+    "path-traversal": 1.0,
+    "cmdi": 1.0,
+    "attack_recall": 1.0
+  },
+  "xgb": {
+    "norm": 0.35809760646565125,
+    "sqli": 1.0,
+    "xss": 1.0,
+    "path-traversal": 1.0,
+    "cmdi": 1.0,
+    "attack_recall": 1.0
+  },
+  "char_svm": {
+    "norm": 1.0,
+    "sqli": 1.0,
+    "xss": 1.0,
+    "path-traversal": 1.0,
+    "cmdi": 1.0,
+    "attack_recall": 1.0
+  },
+  "hybrid": {
+    "norm": 0.4278831209201119,
+    "sqli": 1.0,
+    "xss": 1.0,
+    "path-traversal": 1.0,
+    "cmdi": 1.0,
+    "attack_recall": 1.0
+  },
+  "signature": {
+    "norm": 0.0,
+    "sqli": 0.8504285319325408,
+    "xss": 0.864406779661017,
+    "path-traversal": 0.5257731958762887,
+    "cmdi": 0.3333333333333333,
+    "attack_recall": 0.8390716653914818
+  },
+  "note": "values are alert rates: for 'norm' this is the false-positive rate, otherwise recall"
+}

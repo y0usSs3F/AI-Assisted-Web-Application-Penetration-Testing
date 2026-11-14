@@ -5,20 +5,20 @@
     "monday_false_alerts": 1168,
     "monday_flows": 47799,
     "thursday_recall": 0.9883449883449883,
-    "recalibrated_threshold": 0.8853637011696914,
+    "recalibrated_threshold": 0.8853650848154749,
     "recalibrated_monday_fpr": 0.010000209209397686,
     "recalibrated_thursday_recall": 0.9673659673659674,
     "recalibrated_thursday_fpr": 0.0034129692832764505
   },
   "linsvm": {
     "thursday_fpr": 0.007679180887372013,
-    "monday_fpr": 0.023808029456683193,
-    "monday_false_alerts": 1138,
+    "monday_fpr": 0.023828950396451807,
+    "monday_false_alerts": 1139,
     "monday_flows": 47799,
     "thursday_recall": 0.9883449883449883,
-    "recalibrated_threshold": 0.329590065995497,
+    "recalibrated_threshold": 0.31679016650692715,
     "recalibrated_monday_fpr": 0.010000209209397686,
-    "recalibrated_thursday_recall": 0.9836829836829837,
+    "recalibrated_thursday_recall": 0.986013986013986,
     "recalibrated_thursday_fpr": 0.004266211604095563
   },
   "rf": {
@@ -43,13 +43,24 @@
     "recalibrated_thursday_recall": 1.0,
     "recalibrated_thursday_fpr": 0.004266211604095563
   },
+  "xgb": {
+    "thursday_fpr": 0.0002844141069397042,
+    "monday_fpr": 0.0019874892780183686,
+    "monday_false_alerts": 95,
+    "monday_flows": 47799,
+    "thursday_recall": 1.0,
+    "recalibrated_threshold": 0.008740470744669437,
+    "recalibrated_monday_fpr": 0.010000209209397686,
+    "recalibrated_thursday_recall": 1.0,
+    "recalibrated_thursday_fpr": 0.004550625711035267
+  },
   "mlp": {
     "thursday_fpr": 0.004266211604095563,
     "monday_fpr": 0.010816125860373648,
     "monday_false_alerts": 517,
     "monday_flows": 47799,
     "thursday_recall": 0.9906759906759907,
-    "recalibrated_threshold": 0.5773752655570599,
+    "recalibrated_threshold": 0.5773752655570602,
     "recalibrated_monday_fpr": 0.010000209209397686,
     "recalibrated_thursday_recall": 0.9883449883449883,
     "recalibrated_thursday_fpr": 0.003981797497155859

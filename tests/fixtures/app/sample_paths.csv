@@ -1,0 +1,4 @@
+method,path,query,body
+GET,/rest/products/search,q=orange,
+GET,/api/ping,host=127.0.0.1;cat /etc/passwd,
+GET,/rest/languages,,

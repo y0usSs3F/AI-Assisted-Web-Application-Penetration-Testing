@@ -27,9 +27,10 @@ import data as D
 
 # ------------------------------------------------------------------ style
 SURFACE, INK, INK2, MUTED, GRID, AXIS = "#fcfcfb", "#0b0b0b", "#52514e", "#898781", "#e1e0d9", "#c3c2b7"
-SLOTS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]          # validated categorical order
+SLOTS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#7b52c7", "#e87ba4"]  # categorical order
 COLOR = dict(zip(config.ML_MODELS, SLOTS)) | {config.BASELINE: MUTED}
-MARKER = {"logreg": "o", "linsvm": "s", "rf": "^", "hgb": "D", "mlp": "v", config.BASELINE: "X"}
+MARKER = {"logreg": "o", "linsvm": "s", "rf": "^", "hgb": "D", "xgb": "P", "mlp": "v",
+          config.BASELINE: "X"}
 ORDINAL = ["#86b6ef", "#3987e5", "#1c5cab", "#0d366b"]                     # validated ordinal ramp
 BLUES = LinearSegmentedColormap.from_list("blues", ["#fcfcfb", "#cde2fb", "#86b6ef", "#3987e5",
                                                     "#1c5cab", "#0d366b"])
@@ -259,9 +260,89 @@ def fig10_importance():
     _save(fig, "fig10_feature_importance.png")
 
 
+def fig11_preprocessing():
+    """R5: feature-engineering ablation and regularisation (validation) curves, CSIC 2010."""
+    r = _load("webreq/r5_preprocessing.json")
+    fig, ax = plt.subplots(1, 3, figsize=(13, 3.9), gridspec_kw={"width_ratios": [1.5, 1, 1], "wspace": 0.42})
+    # (a) ablation: ordered stages -> ordinal ramp, value labels carry the numbers
+    ab = [a for a in r["ablation"] if a["Model"] in ("LR", "XGBoost")]
+    stage = {"base": 0, "+ engineered (": 1, "+ engineered +": 2}
+    labels, vals, cols = [], [], []
+    for a in ab:
+        k = 2 if "profile" in a["Feature set"] else 1 if "engineered" in a["Feature set"] else 0
+        labels.append(f"{a['Model']} · {['base 35', '+ engineered', '+ learned profile'][k]}")
+        vals.append(a["CV F1"]); cols.append(ORDINAL[k + 1])
+    for a in r["ablation"]:
+        if a["Model"] in ("Char-SVM", "Hybrid") and ("profile" in a["Feature set"] or a["Model"] == "Char-SVM"):
+            labels.append("Char n-gram SVM" if a["Model"] == "Char-SVM" else "Hybrid · + learned profile")
+            vals.append(a["CV F1"]); cols.append(MUTED)
+    y = np.arange(len(vals))[::-1]
+    ax[0].barh(y, vals, color=cols, height=0.62, edgecolor="white", linewidth=1.5)
+    for yi, v in zip(y, vals):
+        ax[0].text(v - 0.004, yi, f"{v:.3f}", va="center", ha="right", color="white", fontsize=8.5, fontweight="bold")
+    ax[0].set_yticks(y, labels); ax[0].set_xlim(0.7, 1.0); ax[0].set_xlabel("F1 (5-fold CV, training split)")
+    ax[0].set_title("(a) Feature engineering"); ax[0].grid(axis="y", visible=False)
+    # (b, c) validation curves: train vs cross-validated F1
+    for k, (key, title, logx) in enumerate((("lr_C", "(b) LR: L2 strength", True),
+                                            ("xgb_depth", "(c) XGBoost: tree depth", False)), start=1):
+        c = r["curves"][key]
+        a = ax[k]
+        a.plot(c["values"], c["train"], color=INK2, lw=2, ls="--", marker="o", ms=6, label="train")
+        a.plot(c["values"], c["cv"], color=SLOTS[0], lw=2, marker="o", ms=6, label="cross-validated")
+        best = int(np.argmax(c["cv"]))
+        a.annotate(f"best {c['cv'][best]:.3f}", (c["values"][best], c["cv"][best]), xytext=(0, -16),
+                   textcoords="offset points", ha="center", fontsize=8.5, color=INK2)
+        if logx:
+            a.set_xscale("log"); a.set_xlabel("C  (← stronger regularisation)")
+        else:
+            a.set_xlabel("max_depth  (→ more complex)")
+        a.set_ylabel("F1"); a.set_title(title)
+        lo = min(min(c["train"]), min(c["cv"]))
+        a.set_ylim(max(0.0, lo - 0.03), 1.005)
+    ax[1].legend(loc="lower right")
+    _save(fig, "fig11_preprocessing.png")
+
+
+def fig12_lab():
+    """Lab: AI prototype vs signature rules on OWASP ZAP attack traffic against Juice Shop."""
+    s = _load("lab/lab_summary.json")
+    det = {r["Detector"]: r for r in s["detection"]}
+    ai = next(v for k, v in det.items() if k.startswith("AI"))
+    sig = next(v for k, v in det.items() if k.startswith("Signature"))
+    cats = [("sqli", "SQL injection"), ("xss", "Cross-site scripting"), ("path-traversal", "Path traversal"),
+            ("cmdi", "OS command injection"), ("other-injection", "Other injection")]
+    fig, ax = plt.subplots(1, 2, figsize=(12, 3.9), gridspec_kw={"width_ratios": [1.6, 1], "wspace": 0.55})
+    y = np.arange(len(cats))[::-1]
+    h = 0.36
+    for off, r, name, col in ((h / 2, ai, "AI prototype", SLOTS[0]), (-h / 2, sig, "Signature rules (CRS-style)", MUTED)):
+        vals = [r.get(f"Recall {c} (payload-bearing)", np.nan) for c, _ in cats]
+        ax[0].barh(y + off, vals, height=h, color=col, label=name, edgecolor="white", linewidth=1.5)
+        for yi, v in zip(y + off, vals):
+            ax[0].text(v + 0.01, yi, f"{v:.0%}", va="center", fontsize=8.5, color=INK2)
+    ax[0].set_yticks(y, [lab for _, lab in cats]); ax[0].set_xlim(0, 1.12)
+    ax[0].set_xlabel("detection rate on ZAP attack requests carrying a payload")
+    ax[0].set_title("(a) Attacks detected"); ax[0].grid(axis="y", visible=False)
+    ax[0].legend(loc="upper center", bbox_to_anchor=(0.45, -0.2), ncol=2)
+    rows = [(k, v["FPR benign"]) for k, v in det.items()]
+    short = {"AI": "AI prototype", "Sig": "Signature rules", "CSIC-trained XGBoost": "CSIC-trained XGBoost",
+             "CSIC-trained char-SVM": "CSIC-trained char-SVM"}
+    names = [next(sv for sk, sv in short.items() if k.startswith(sk)) for k, _ in rows]
+    vals = [v for _, v in rows]
+    yy = np.arange(len(rows))[::-1]
+    ax[1].barh(yy, vals, height=0.55, color=[SLOTS[0] if n.startswith("AI") else MUTED if n.startswith("Sig")
+                                             else SLOTS[1] for n in names], edgecolor="white", linewidth=1.5)
+    for yi, v in zip(yy, vals):
+        ax[1].text(v + 0.015, yi, f"{v:.1%}", va="center", fontsize=8.5, color=INK2)
+    ax[1].set_yticks(yy, names); ax[1].set_xlim(0, 1.18)
+    ax[1].set_xlabel("false-alarm rate on benign shoppers")
+    ax[1].set_title("(b) False alarms"); ax[1].grid(axis="y", visible=False)
+    _save(fig, "fig12_lab.png")
+
+
 def main():
     for fn in (fig01_data, fig02_detect_vs_classify, fig03_roc, fig04_threshold_ids, fig05_validity,
-               fig06_confusion, fig07_unseen, fig08_timing, fig09_cross_day, fig10_importance):
+               fig06_confusion, fig07_unseen, fig08_timing, fig09_cross_day, fig10_importance,
+               fig11_preprocessing, fig12_lab):
         try:
             fn()
         except FileNotFoundError as e:

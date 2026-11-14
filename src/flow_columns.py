@@ -26,7 +26,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results"
 
 # canonical (CIC-IDS2017) name -> aliases used by other CICFlowMeter versions
@@ -126,7 +126,10 @@ _FEAT_LK, _META_LK = _lookup(ALIASES), _lookup(META)
 
 def detect_style(columns) -> str:
     keys = {_key(c) for c in columns}
-    if "flowduration" in keys and any("_" in str(c) and str(c).islower() for c in columns):
+    # python-cicflowmeter writes snake_case names such as "flow_duration". (CIC-IDS2017 itself
+    # has two lower-case columns, act_data_pkt_fwd and min_seg_size_forward, so a generic
+    # "any lower-case column" test would misread genuine CIC files as seconds-based.)
+    if "flow_duration" in {str(c).strip() for c in columns}:
         return "python-cicflowmeter"
     if _key("Total Fwd Packet") in keys or _key("FWD Init Win Bytes") in keys:
         return "java-cicflowmeter-v4"
