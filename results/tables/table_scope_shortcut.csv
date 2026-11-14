@@ -1,0 +1,5 @@
+Setting,Accuracy,Precision,Recall,F1,ROC-AUC,FPR,MCC
+Trivial rule: port == 80,0.8947,0.1104,1.0,0.1988,0.9466,0.1067,0.314
+"RF, all traffic, with port",0.9997,0.9953,0.979,0.9871,1.0,0.0001,0.9869
+"RF, all traffic, no port",0.9996,1.0,0.9697,0.9846,1.0,0.0,0.9845
+"RF, HTTP flows only (ours)",0.9985,1.0,0.986,0.993,1.0,0.0,0.9921

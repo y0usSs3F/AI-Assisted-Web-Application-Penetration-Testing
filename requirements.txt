@@ -1,0 +1,13 @@
+# Tested with Python 3.13, scikit-learn 1.9, pandas 3.0, numpy 2.5, matplotlib 3.11
+numpy>=1.26
+pandas>=2.1
+scikit-learn>=1.4
+scipy>=1.11
+matplotlib>=3.8
+joblib>=1.3
+
+# Optional
+# pytest            -> python -m pytest tests/
+# jupyter           -> notebooks/walkthrough.ipynb
+# xgboost           -> drop-in replacement for HistGradientBoostingClassifier in src/models.py
+# cicflowmeter      -> Python flow meter for the lab harness (or use the Java CICFlowMeter)

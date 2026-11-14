@@ -1,0 +1,60 @@
+{
+  "thursday": {
+    "raw_rows": 170366,
+    "raw_labels": {
+      "BENIGN": 168186,
+      "Brute Force": 1507,
+      "XSS": 652,
+      "SQL Injection": 21
+    },
+    "nonfinite_rows_removed": 135,
+    "after_nonfinite": {
+      "BENIGN": 168051,
+      "Brute Force": 1507,
+      "XSS": 652,
+      "SQL Injection": 21
+    },
+    "duplicates_removed": 6052,
+    "after_dedup": {
+      "BENIGN": 162036,
+      "Brute Force": 1470,
+      "XSS": 652,
+      "SQL Injection": 21
+    },
+    "after_dedup_rows": 164179,
+    "constant_columns_removed": [
+      "Bwd PSH Flags",
+      "Fwd URG Flags",
+      "Bwd URG Flags",
+      "CWE Flag Count",
+      "Fwd Avg Bytes/Bulk",
+      "Fwd Avg Packets/Bulk",
+      "Fwd Avg Bulk Rate",
+      "Bwd Avg Bytes/Bulk",
+      "Bwd Avg Packets/Bulk",
+      "Bwd Avg Bulk Rate"
+    ],
+    "http_rows": 19725,
+    "http_labels": {
+      "BENIGN": 17582,
+      "Brute Force": 1470,
+      "XSS": 652,
+      "SQL Injection": 21
+    },
+    "http_extra_constant_columns_removed": []
+  },
+  "monday": {
+    "raw_rows": 529918,
+    "raw_labels": {
+      "BENIGN": 529918
+    },
+    "http_rows_raw": 50834,
+    "nonfinite_rows_removed": 34,
+    "duplicates_removed": 3001,
+    "http_rows": 47799,
+    "http_labels": {
+      "BENIGN": 47799
+    }
+  },
+  "n_features": 66
+}

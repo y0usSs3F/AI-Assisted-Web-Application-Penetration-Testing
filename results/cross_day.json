@@ -1,0 +1,68 @@
+{
+  "logreg": {
+    "thursday_fpr": 0.01080773606370876,
+    "monday_fpr": 0.024435657649741628,
+    "monday_false_alerts": 1168,
+    "monday_flows": 47799,
+    "thursday_recall": 0.9883449883449883,
+    "recalibrated_threshold": 0.8853637011696914,
+    "recalibrated_monday_fpr": 0.010000209209397686,
+    "recalibrated_thursday_recall": 0.9673659673659674,
+    "recalibrated_thursday_fpr": 0.0034129692832764505
+  },
+  "linsvm": {
+    "thursday_fpr": 0.007679180887372013,
+    "monday_fpr": 0.023808029456683193,
+    "monday_false_alerts": 1138,
+    "monday_flows": 47799,
+    "thursday_recall": 0.9883449883449883,
+    "recalibrated_threshold": 0.329590065995497,
+    "recalibrated_monday_fpr": 0.010000209209397686,
+    "recalibrated_thursday_recall": 0.9836829836829837,
+    "recalibrated_thursday_fpr": 0.004266211604095563
+  },
+  "rf": {
+    "thursday_fpr": 0.0,
+    "monday_fpr": 0.00023013033745475847,
+    "monday_false_alerts": 11,
+    "monday_flows": 47799,
+    "thursday_recall": 0.986013986013986,
+    "recalibrated_threshold": 0.11333333333333333,
+    "recalibrated_monday_fpr": 0.009749157932174313,
+    "recalibrated_thursday_recall": 1.0,
+    "recalibrated_thursday_fpr": 0.00540386803185438
+  },
+  "hgb": {
+    "thursday_fpr": 0.0002844141069397042,
+    "monday_fpr": 0.0012761773258854788,
+    "monday_false_alerts": 61,
+    "monday_flows": 47799,
+    "thursday_recall": 0.9953379953379954,
+    "recalibrated_threshold": 6.0513645870505923e-05,
+    "recalibrated_monday_fpr": 0.010000209209397686,
+    "recalibrated_thursday_recall": 1.0,
+    "recalibrated_thursday_fpr": 0.004266211604095563
+  },
+  "mlp": {
+    "thursday_fpr": 0.004266211604095563,
+    "monday_fpr": 0.010816125860373648,
+    "monday_false_alerts": 517,
+    "monday_flows": 47799,
+    "thursday_recall": 0.9906759906759907,
+    "recalibrated_threshold": 0.5773752655570599,
+    "recalibrated_monday_fpr": 0.010000209209397686,
+    "recalibrated_thursday_recall": 0.9883449883449883,
+    "recalibrated_thursday_fpr": 0.003981797497155859
+  },
+  "threshold_ids": {
+    "thursday_fpr": 0.006825938566552901,
+    "monday_fpr": 0.019247264587125255,
+    "monday_false_alerts": 920,
+    "monday_flows": 47799,
+    "thursday_recall": 0.0,
+    "recalibrated_threshold": 9.0,
+    "recalibrated_monday_fpr": 0.007740747714387331,
+    "recalibrated_thursday_recall": 0.0,
+    "recalibrated_thursday_fpr": 0.003697383390216155
+  }
+}

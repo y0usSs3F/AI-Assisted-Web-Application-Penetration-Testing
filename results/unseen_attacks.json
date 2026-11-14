@@ -1,0 +1,119 @@
+{
+  "Brute Force": {
+    "n_flows": 1470,
+    "logreg": {
+      "unseen_recall": 0.9639455782312926,
+      "seen_recall_oof": 0.998639455782313,
+      "fpr": 0.019055745164960183,
+      "roc_auc_unseen": 0.9968668013280398
+    },
+    "linsvm": {
+      "unseen_recall": 0.9503401360544218,
+      "seen_recall_oof": 0.9979591836734694,
+      "fpr": 0.015073947667804323,
+      "roc_auc_unseen": 0.996242638124647
+    },
+    "rf": {
+      "unseen_recall": 0.8884353741496599,
+      "seen_recall_oof": 0.9945578231292517,
+      "fpr": 0.0,
+      "roc_auc_unseen": 0.9992979615054213
+    },
+    "hgb": {
+      "unseen_recall": 0.9455782312925171,
+      "seen_recall_oof": 0.998639455782313,
+      "fpr": 0.0005688282138794084,
+      "roc_auc_unseen": 0.9996463204166762
+    },
+    "mlp": {
+      "unseen_recall": 0.9503401360544218,
+      "seen_recall_oof": 0.9979591836734694,
+      "fpr": 0.0011376564277588168,
+      "roc_auc_unseen": 0.9982654609056364
+    },
+    "threshold_ids": {
+      "unseen_recall": 0.0,
+      "seen_recall_oof": 0.0,
+      "fpr": 0.006825938566552901,
+      "roc_auc_unseen": 0.4914597408929442
+    }
+  },
+  "XSS": {
+    "n_flows": 652,
+    "logreg": {
+      "unseen_recall": 0.9708588957055214,
+      "seen_recall_oof": 0.9723926380368099,
+      "fpr": 0.009101251422070534,
+      "roc_auc_unseen": 0.9926964027722525
+    },
+    "linsvm": {
+      "unseen_recall": 0.9723926380368099,
+      "seen_recall_oof": 0.9739263803680982,
+      "fpr": 0.005688282138794084,
+      "roc_auc_unseen": 0.9922156905853696
+    },
+    "rf": {
+      "unseen_recall": 0.9386503067484663,
+      "seen_recall_oof": 0.9723926380368099,
+      "fpr": 0.0,
+      "roc_auc_unseen": 0.9989399903683075
+    },
+    "hgb": {
+      "unseen_recall": 0.9478527607361963,
+      "seen_recall_oof": 0.9984662576687117,
+      "fpr": 0.0005688282138794084,
+      "roc_auc_unseen": 0.9901246798160207
+    },
+    "mlp": {
+      "unseen_recall": 0.9723926380368099,
+      "seen_recall_oof": 0.9877300613496932,
+      "fpr": 0.0017064846416382253,
+      "roc_auc_unseen": 0.9936185675300292
+    },
+    "threshold_ids": {
+      "unseen_recall": 0.0,
+      "seen_recall_oof": 0.0,
+      "fpr": 0.006825938566552901,
+      "roc_auc_unseen": 0.4816932410645114
+    }
+  },
+  "SQL Injection": {
+    "n_flows": 21,
+    "logreg": {
+      "unseen_recall": 0.5714285714285714,
+      "seen_recall_oof": 0.8095238095238095,
+      "fpr": 0.00881683731513083,
+      "roc_auc_unseen": 0.9394739693374505
+    },
+    "linsvm": {
+      "unseen_recall": 0.7142857142857143,
+      "seen_recall_oof": 0.9523809523809523,
+      "fpr": 0.006257110352673493,
+      "roc_auc_unseen": 0.9779782220055258
+    },
+    "rf": {
+      "unseen_recall": 0.42857142857142855,
+      "seen_recall_oof": 0.9523809523809523,
+      "fpr": 0.0,
+      "roc_auc_unseen": 0.9990248659190638
+    },
+    "hgb": {
+      "unseen_recall": 0.9047619047619048,
+      "seen_recall_oof": 1.0,
+      "fpr": 0.0002844141069397042,
+      "roc_auc_unseen": 0.9999593694132943
+    },
+    "mlp": {
+      "unseen_recall": 0.47619047619047616,
+      "seen_recall_oof": 0.9047619047619048,
+      "fpr": 0.003981797497155859,
+      "roc_auc_unseen": 0.9954629178178667
+    },
+    "threshold_ids": {
+      "unseen_recall": 0.0,
+      "seen_recall_oof": 0.0,
+      "fpr": 0.006825938566552901,
+      "roc_auc_unseen": 0.5346511186954873
+    }
+  }
+}
