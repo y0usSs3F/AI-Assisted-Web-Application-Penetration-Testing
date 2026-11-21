@@ -51,7 +51,10 @@ x2025fph@stfx.ca}
 \maketitle
 
 \begin{abstract}
-Web applications remain the most attacked part of a typical organisation, and signature rules and vulnerability scanners only recognise what they were written to recognise. We measure how well machine learning (ML) detects and classifies web-application attacks compared with conventional detection, addressing the open issues a recent systematic review names: fragmented datasets, missing live validation and inconsistent evaluation. On network flows (CIC-IDS2017), six ML models detect brute-force, XSS and SQL-injection flows with F1 up to 0.999, while a threshold IDS detects none. Most attack flows carry no payload and a TCP fingerprint identifies the attacker, yet with both confounds removed F1 is still 0.96--0.97. On HTTP requests, a character n-gram model and feature-based models with a learned per-parameter profile reach F1 0.993--0.995 on de-duplicated HTTP CSIC 2010, and the n-gram model classifies attack types on HttpParamsDataset with macro-F1 0.999. Settings are tuned by inner cross-validation, and results are tested with label-permutation, near-duplicate, structural-shortcut and dataset-shift checks. Models trained on one application flag most benign traffic of another, and three quarters of the unique ``normal'' requests in SR-BH 2020 are scanner attacks or carry injection payloads. A prototype that scores parameter values was tested live on OWASP Juice Shop during an OWASP ZAP active scan. At 0.45\% false alarms it detected 95\% of SQL-injection and 94\% of XSS payloads, against 73\% and 94\% for CRS-style signatures. Counting ZAP's payload-free probes, its recall falls to 84\% and 31\%. Its ranking contains every injection flaw ZAP confirmed but mainly follows where the scanner attacked.
+% Web applications remain the most attacked part of a typical organisation, and signature rules and vulnerability scanners only recognise what they were written to recognise. We measure how well machine learning (ML) detects and classifies web-application attacks compared with conventional detection, addressing the open issues a recent systematic review names: fragmented datasets, missing live validation and inconsistent evaluation. On network flows (CIC-IDS2017), six ML models detect brute-force, XSS and SQL-injection flows with F1 up to 0.999, while a threshold IDS detects none. Most attack flows carry no payload and a TCP fingerprint identifies the attacker, yet with both confounds removed F1 is still 0.96--0.97. On HTTP requests, a character n-gram model and feature-based models with a learned per-parameter profile reach F1 0.993--0.995 on de-duplicated HTTP CSIC 2010, and the n-gram model classifies attack types on HttpParamsDataset with macro-F1 0.999. Settings are tuned by inner cross-validation, and results are tested with label-permutation, near-duplicate, structural-shortcut and dataset-shift checks. Models trained on one application flag most benign traffic of another, and three quarters of the unique ``normal'' requests in SR-BH 2020 are scanner attacks or carry injection payloads. A prototype that scores parameter values was tested live on OWASP Juice Shop during an OWASP ZAP active scan. At 0.45\% false alarms it detected 95\% of SQL-injection and 94\% of XSS payloads, against 73\% and 94\% for CRS-style signatures. Counting ZAP's payload-free probes, its recall falls to 84\% and 31\%. Its ranking contains every injection flaw ZAP confirmed but mainly follows where the scanner attacked.
+
+Web applications continue to be the target of more attacks than any other area in the typical organization. Signature based detection systems and vulnerability scanners can only identify attacks that have been explicitly defined in their rules. This study compares how well machine learning (ML) models detect and classify web-application attacks compared to traditional methods of detection. It addresses the issues identified by a recent systematic review: disjointed data sets, lack of real-time validation, and inconsistency in evaluating performance. On network flow data (CIC-IDS2017), six ML models were able to detect brute-force, XSS, and SQL injection flows with F1 scores as high as 0.999. In contrast, a threshold-based IDS did not detect any of these flows. The majority of the attack flows do not contain a payload, and the attacker is identified using a TCP fingerprint. However, even when both confounding variables are removed from consideration, the F1 scores remain between 0.96 and 0.97. When analyzing HTTP requests, a character-based n-gram model and feature-based models that use a learned profile for each parameter achieved F1 scores of 0.993 to 0.995 on a de-duplicated version of the HTTP CSIC 2010 dataset. Additionally, the n-gram model classified attack types on the HttpParamsDataset with a macro-F1 score of 0.999. Model parameters were optimized through internal cross-validation, and performance was evaluated through label-permutation tests, near-duplicate detection tests, structural-shortcut tests, and dataset-shift tests. Models that were trained on one application flagged most of the legitimate traffic of another application. Furthermore, three-quarters of the unique "normal" requests found in the SR-BH 2020 dataset are either scanner attacks or contain injection payloads. A prototype was developed that generates a score for parameter values and was tested in real-time on OWASP Juice Shop during an active scan conducted by OWASP ZAP. The prototype detected 95\% of SQL injection payloads and 94\% of XSS payloads with a false alarm rate of 0.45\%, whereas CRS-style signatures detected 73\% and 94\% of the payloads, respectively. If we consider ZAP's payload-free probes, its recall rate decreases to 84\% for SQL injection and 31\% for XSS. Additionally, the ranking produced by the prototype includes all injection flaws that ZAP confirmed, but primarily ranks flows based on where ZAP attacked.
+
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -60,45 +63,32 @@ web application security, penetration testing, intrusion detection, machine lear
 
 \section{Introduction}
 
-Web applications carry banking, health care and retail services, and they are attacked
-constantly. A 2024 industry report cited by Fasla and Mehmood counts more than 240,000
-web-application attacks per day, 38.8\% of them SQL injection~\cite{fasla2026}. Injection flaws
-and broken access control lead the OWASP Top~10~\cite{owasptop10}. Penetration
-testers find them with scanners such as OWASP ZAP~\cite{zap}, which send crafted payloads and
-confirm a vulnerability from the response. Defenders block them with WAF signature rule sets
-such as the OWASP Core Rule Set (CRS)~\cite{crs}. Both depend on hand-written knowledge.
+In addition to supporting banking, health care, and retail business operations through web-based applications; web-based applications are subject to continuous attack. According to an industry report released in 2024 as cited by Fasla and Mehmood; there were over 240,000 attacks against web-based applications each day, 38.8\% of these attacks involved SQL injection\cite{fasla2026}. Vulnerabilities caused by injection flaws and broken access controls rank first and second among the OWASP Top10\cite{owasptop10}. Penetration testers identify vulnerabilities using automated scanners (e.g., OWASP ZAP\cite{zap}), which generate and transmit malicious inputs and determine whether a vulnerability exists based on the system's reaction. On the other hand, defenders use WAF signatures (e.g., the OWASP Core Rule Set (CRS)~\cite{crs}) to prevent exploitation of identified vulnerabilities. Both defense mechanisms rely upon human-developed rules.
 
-ML promises to learn the boundary between benign and malicious traffic from examples, and
-near-perfect accuracies are routinely reported on public datasets~\cite{tadhani2024,yang2025}.
-Fasla and Mehmood's systematic review of 81 studies on AI for SQLi and XSS
-detection~\cite{fasla2026} shows how weak that evidence is. No benchmark is at once payload-aware,
-multi-class and realistic. Models are rarely validated on live traffic or across datasets.
-Evaluation protocols differ from study to study, and few detectors explain their decisions. The
-security-ML literature adds that high accuracy can come from spurious correlations, data snooping
-and unrealistic evaluation~\cite{arp2022,sommer2010}.
+The promise of ML lies in its ability to understand the distinction between safe and harmful network activity by analyzing examples of both. When evaluated against publicly available datasets, researchers often report near perfect classification performance\cite{tadhani2024,yang2025}. However, Fasla and Mehmood’s systematic review of 81 articles focused on the application of AI techniques for SQLi and XSS detection\cite{fasla2026} demonstrated just how weak this evidence truly is. There are currently no benchmarks which have each of the following characteristics: (1) payload awareness, (2) multiple classes, and (3) realistic environments. Furthermore, models are rarely tested using real-time traffic or across different datasets. In addition to these limitations, the methods used to evaluate each model vary greatly among researchers. Lastly, few of the developed detection mechanisms provide explanations for why they made a particular classification decision. The security ML community also emphasizes that while high performance may be achieved through the use of spurious correlations, data snooping, and unrealistic evaluations~\cite{arp2022,sommer2010}, such results may be artificial.
 
-At the same time, AI is entering penetration-testing tools. Wang and D'Cruze~\cite{wang2024} let
-ChatGPT-4 answer a tester's questions over Nmap and Wireshark output from a vulnerable virtual
-machine, and AutoRed~\cite{khairmode2026} passes Nmap and CVE records to a large language model
-(LLM) that explains each finding and writes the report. Neither evaluates the AI against
-independent ground truth. The first reports example answers, and the second counts its reference
-vulnerabilities from its own reports.
+While AI is being integrated into penetration testing software; Wang and D'Cruze\cite{wang2024} utilized ChatGPT-4 to respond to a penetration tester's questions based upon Nmap and Wireshark output from a vulnerable virtual machine, and AutoRed\cite{khairmode2026} transmits Nmap and CVE records to a large language model (LLM) which provides explanations for all findings and creates the report. However, neither study assessed the performance of the AI in comparison with independent ground-truth data. One study reported sample responses, whereas the other study determined the number of referenced vulnerabilities using data obtained directly from the reports generated by AutoRed.
 This project asks:
+
 \emph{How effectively can AI/ML assist in detecting and classifying web-application attacks, and how
 does its performance compare with conventional detection?}
 
 We answer it with measurements designed around the review's open issues (Table~\ref{tab:gaps}).
 Our contributions are:
-(i)~a flow-level study on CIC-IDS2017 with six ML models, a conventional threshold IDS and a
-validity audit;
-(ii)~a request-level study on HTTP CSIC 2010, HttpParamsDataset and SR-BH 2020 that extracts
-URL, parameter, header and content features, engineers new ones, learns an application profile
-and tunes regularisation, all without touching the test data;
-(iii)~four explicit checks of whether the accuracies are real;
-(iv)~an AI-assisted assessment prototype with risk scoring, explanations, endpoint prioritisation
-and a user interface; and
-(v)~a live comparison with OWASP ZAP and signature rules against OWASP Juice Shop, with
-per-request ground truth.
+
+\begin{itemize}
+
+    \item A flow-level study on CIC-IDS2017 with six ML models, a conventional threshold IDS and a validity audit.
+    
+    \item A request-level study on HTTP CSIC 2010, HttpParamsDataset and SR-BH 2020 that extracts URL, parameter, header and content features, engineers new ones, learns an application profile and tunes regularisation, all without touching the test data.
+    
+    \item Four explicit checks of whether the accuracies are real.
+    
+    \item An AI-assisted assessment prototype with risk scoring, explanations, endpoint prioritisation and a user interface.
+    
+    \item A live comparison with OWASP ZAP and signature rules against OWASP Juice Shop, with per-request ground truth.
+    
+\end{itemize}
 
 \begin{table}[t]
 \centering
@@ -137,154 +127,69 @@ SQL injection (SQLi, CWE-89) places attacker-controlled text into a database que
 
 \subsection{Conventional detection}
 
-Active scanners (ZAP, Burp Suite) inject payloads and confirm vulnerabilities from responses.
-WAFs match payload patterns. The CRS groups its rules into families for SQLi (942xxx), XSS (941xxx),
-local file inclusion (930xxx) and remote command execution (932xxx)~\cite{crs}. Signatures are precise but
-brittle. Adversarial rewriting evaded ML-based SQLi detectors in up to 100\% of attempts and
-evaded all seven commercial WAF services tested~\cite{qu2024}, and Floris \emph{et al.} raised CRS
-detection by up to 30\% with negligible false alarms by learning how to weight its rules~\cite{floris2025}.
-Statistical anomaly detection~\cite{denning1987}, and per-parameter profiles of length and
-character distribution for web requests~\cite{kruegel2003}, are the conventional techniques that
-need no signatures.
+Active scanners (ZAP, Burp Suite) inject payloads and confirm vulnerabilities from responses. WAFs match payload patterns. The CRS groups its rules into families for SQLi (942xxx), XSS (941xxx), local file inclusion (930xxx) and remote command execution (932xxx)~\cite{crs}. Signatures are precise but brittle. Adversarial rewriting evaded ML-based SQLi detectors in up to 100\% of attempts and evaded all seven commercial WAF services tested~\cite{qu2024}, and Floris \emph{et al.} raised CRS detection by up to 30\% with negligible false alarms by learning how to weight its rules~\cite{floris2025}. Statistical anomaly detection~\cite{denning1987}, and per-parameter profiles of length and character distribution for web requests~\cite{kruegel2003}, are the conventional techniques that need no signatures.
 
 \subsection{Machine learning for web attacks}
 
-Fasla and Mehmood~\cite{fasla2026} group the field into classical ML, deep learning,
-transformer and explainable-AI (XAI) approaches. Across all four, they find strong
-reported scores, static or outdated datasets and little deployment.
-CIC-IDS2017~\cite{sharafaldin2018} is the most common recent benchmark, with broad ML comparisons in
-\cite{maseer2021,kurniabudi2020}. On its web-attack traffic and that of CSE-CIC-IDS2018, Irfa'issurur
-and Josaphat report 97.77\% accuracy with a random forest after SMOTE oversampling and PCA, but an
-F1 of only 87.28\%~\cite{irfaissurur2025}. The review
-rates CIC-IDS2017 as only partly payload-aware~\cite{fasla2026}, and audits found that CICFlowMeter
-splits connections into spurious payload-less flows and that labelling errors change measured
-performance~\cite{engelen2021,lanvin2023}.
-At request level, Kim \emph{et al.}'s AI-IDS reads raw HTTP payloads with a CNN-LSTM and was
-validated on CSIC 2010, CIC-IDS2017 and real traffic~\cite{kim2020}. Tadhani \emph{et al.}~\cite{tadhani2024}
-report 99.77\% accuracy on CSIC 2010 with a CNN-LSTM, and Yang \emph{et al.}~\cite{yang2025} report
-90.9\% on CSIC 2010 and 92.2\% on HttpParams with an autoencoder and an MLP. Earlier work learned
-from request strings with deep models~\cite{liang2017} or from XSS payload features~\cite{mereani2018}.
-The review places CSIC 2010 and payload sets such as HttpParams in the opposite corner from
-CIC-IDS2017. They hold payloads but are binary or synthetic~\cite{fasla2026}, so we use both kinds.
+Fasla and Mehmood~\cite{fasla2026} group the field into classical ML, deep learning, transformer and explainable-AI (XAI) approaches. Across all four, they find strong reported scores, static or outdated datasets and little deployment. CIC-IDS2017~\cite{sharafaldin2018} is the most common recent benchmark, with broad ML comparisons in \cite{maseer2021,kurniabudi2020}. On its web-attack traffic and that of CSE-CIC-IDS2018, Irfa'issurur and Josaphat report 97.77\% accuracy with a random forest after SMOTE oversampling and PCA, but an F1 of only 87.28\%~\cite{irfaissurur2025}. The review rates CIC-IDS2017 as only partly payload-aware~\cite{fasla2026}, and audits found that CICFlowMeter splits connections into spurious payload-less flows and that labelling errors change measured performance~\cite{engelen2021,lanvin2023}. At request level, Kim \emph{et al.}'s AI-IDS reads raw HTTP payloads with a CNN-LSTM and was validated on CSIC 2010, CIC-IDS2017 and real traffic~\cite{kim2020}. Tadhani \emph{et al.}~\cite{tadhani2024} report 99.77\% accuracy on CSIC 2010 with a CNN-LSTM, and Yang \emph{et al.}~\cite{yang2025} report 90.9\% on CSIC 2010 and 92.2\% on HttpParams with an autoencoder and an MLP. Earlier work learned from request strings with deep models~\cite{liang2017} or from XSS payload features~\cite{mereani2018}. The review places CSIC 2010 and payload sets such as HttpParams in the opposite corner from CIC-IDS2017. They hold payloads but are binary or synthetic~\cite{fasla2026}, so we use both kinds.
 
 \subsection{Explainability}
 
-SHAP and LIME attribute a prediction to input features, and the review treats such explanations
-as necessary for analyst trust, while noting that they add computational cost~\cite{fasla2026}.
-Signature rules explain themselves, but only for the patterns they encode.
+SHAP and LIME attribute a prediction to input features, and the review treats such explanations as necessary for analyst trust, while noting that they add computational cost~\cite{fasla2026}. Signature rules explain themselves, but only for the patterns they encode.
 
 \subsection{AI-assisted penetration testing}
 
-LLMs enter penetration testing at two points: interpreting the output of conventional tools and
-acting as autonomous agents. Wang and D'Cruze~\cite{wang2024} index Nmap NSE and Wireshark output
-from a bWAPP virtual machine with LlamaIndex and query it through ChatGPT-4. The answers list open
-ports, CSRF, Heartbleed and MITM exposure and Metasploit steps. They are judged by example rather
-than measured, and the chatbot answered an attacker's framing as readily as a tester's.
-AutoRed~\cite{khairmode2026} chains WHOIS, DNS and Nmap with the Vulners script, retrieves
-the matching MITRE CVE records and lets an LLM explain impact and mitigation. It deliberately
-stops before exploitation. It reports 560 vulnerabilities on five targets and a 94.3\% detection
-rate, but the reference set is counted from its own reports. Version-to-CVE matching finds outdated
-components. It cannot see an injection flaw in the application's own code, which is where SQLi
-and XSS live.
-Autonomous agents go further~\cite{deng2024,shen2025}. Yu \emph{et al.} show that LLM agents
-exploit known web vulnerabilities in up to 90\% of cases but recall only about 50\% of them during
-autonomous reconnaissance~\cite{yu2026}. Our work targets that weak step with a measurable
-detector that scores traffic, names the attack and points the tester to the riskiest endpoints.
+LLMs enter penetration testing at two points: interpreting the output of conventional tools and acting as autonomous agents. Wang and D'Cruze~\cite{wang2024} index Nmap NSE and Wireshark output from a bWAPP virtual machine with LlamaIndex and query it through ChatGPT-4. The answers list open ports, CSRF, Heartbleed and MITM exposure and Metasploit steps. They are judged by example rather than measured, and the chatbot answered an attacker's framing as readily as a tester's. AutoRed~\cite{khairmode2026} chains WHOIS, DNS and Nmap with the Vulners script, retrieves the matching MITRE CVE records and lets an LLM explain impact and mitigation. It deliberately stops before exploitation. It reports 560 vulnerabilities on five targets and a 94.3\% detection rate, but the reference set is counted from its own reports. Version-to-CVE matching finds outdated components. It cannot see an injection flaw in the application's own code, which is where SQLi and XSS live. Autonomous agents go further~\cite{deng2024,shen2025}. Yu \emph{et al.} show that LLM agents exploit known web vulnerabilities in up to 90\% of cases but recall only about 50\% of them during autonomous reconnaissance~\cite{yu2026}. Our work targets that weak step with a measurable detector that scores traffic, names the attack and points the tester to the riskiest endpoints.
 
 \section{Data}
 
-\textbf{CIC-IDS2017 (flows).} We use the Thursday web-attack day, verified against published
-label counts and SHA-256 hashes, and Monday (benign only) as an unseen day. After repairing labels,
-removing undefined-rate flows, 6,052 exact duplicates and constant columns, and restricting to
-port-80 flows (other ports let a model ``detect'' web traffic instead of attacks), 19,725 flows with
-66 CICFlowMeter features remain: 17,582 benign, 1,470 brute force, 652 XSS and 21 SQLi.
+% \textbf{CIC-IDS2017 (flows).} We use the Thursday web-attack day, verified against published label counts and SHA-256 hashes, and Monday (benign only) as an unseen day. After repairing labels, removing undefined-rate flows, 6,052 exact duplicates and constant columns, and restricting to port-80 flows (other ports let a model ``detect'' web traffic instead of attacks), 19,725 flows with 66 CICFlowMeter features remain: 17,582 benign, 1,470 brute force, 652 XSS and 21 SQLi.
 
-\textbf{HTTP CSIC 2010 (requests).} The dataset holds 97,065 requests to an e-commerce
-application~\cite{csic2010}. Of these, 64\% are exact duplicates. A random split would place copies of the same
-request in training and test, so we keep 34,593 unique requests (46.1\% anomalous).
+% \textbf{HTTP CSIC 2010 (requests).} The dataset holds 97,065 requests to an e-commerce application~\cite{csic2010}. Of these, 64\% are exact duplicates. A random split would place copies of the same request in training and test, so we keep 34,593 unique requests (46.1\% anomalous).
 
-\textbf{HttpParamsDataset (payloads).} 31,067 parameter values labelled normal, SQLi, XSS,
-command injection or path traversal, with an official train/test split~\cite{httpparams}. We remove
-test payloads that also occur in training.
+% \textbf{HttpParamsDataset (payloads).} 31,067 parameter values labelled normal, SQLi, XSS, command injection or path traversal, with an official train/test split~\cite{httpparams}. We remove test payloads that also occur in training.
 
-\textbf{SR-BH 2020 (requests).} 907,814 requests to an Internet-exposed WordPress server in July
-2020, with CAPEC multi-labels~\cite{srbh2022}. Dictionary password guesses (CAPEC-16) are
-content-identical to normal logins, so the 836 requests labelled only CAPEC-16 are removed. Manual
-inspection of the 90,306 unique ``normal'' requests showed that 69,008 (76\%) are OWASP ZAP
-scan traffic or carry injection characters, mostly in the URL path, e.g.
-\texttt{/blog";cat /etc/passwd;"/wp-content} and ZAP's \texttt{zApPX} markers. We drop these
-(we do not relabel them) using explicit, detector-independent criteria.
+% \textbf{SR-BH 2020 (requests).} 907,814 requests to an Internet-exposed WordPress server in July 2020, with CAPEC multi-labels~\cite{srbh2022}. Dictionary password guesses (CAPEC-16) are content-identical to normal logins, so the 836 requests labelled only CAPEC-16 are removed. Manual inspection of the 90,306 unique ``normal'' requests showed that 69,008 (76\%) are OWASP ZAP scan traffic or carry injection characters, mostly in the URL path, e.g. \texttt{/blog";cat /etc/passwd;"/wp-content} and ZAP's \texttt{zApPX} markers. We drop these (we do not relabel them) using explicit, detector-independent criteria.
 
-\textbf{Combined request dataset.} CSIC 2010 and the cleaned SR-BH 2020 are merged into one schema:
-method, path, query, body, content type, a binary label, an attack type and the source. We
-de-duplicate across sources and sample SR-BH 50/50 normal/attack, so that neither source dominates
-and the source carries no label information.
+% \textbf{Combined request dataset.} CSIC 2010 and the cleaned SR-BH 2020 are merged into one schema: method, path, query, body, content type, a binary label, an attack type and the source. We de-duplicate across sources and sample SR-BH 50/50 normal/attack, so that neither source dominates and the source carries no label information.
+
+\textbf{CIC-IDS2017 (flows).} The Thursday web-attack data was validated using the published label counts and SHA-256 hashes, while the Monday (benign only) data was reserved for validation. After fixing labels, removing flows with undefined rates, eliminating 6,052 exact duplicates and constant columns, and filtering out flows that do not use port 80 (since using other ports would allow a machine learning algorithm to identify "web traffic" as opposed to attacks), there are 19,725 remaining flows that contain 66 CICFlowMeter features: 17,582 benign, 1,470 brute force, 652 cross-site scripting (XSS), and 21 SQL injection (SQLi).
+
+\textbf{HTTP CSIC 2010 (requests).} The data contains 97,065 requests made to a retail web site~\cite{csic2010}. Approximately 64\% of all requests are identical. If we were to randomly split the data, we would likely have some of the same request in both the training set and the test set. Therefore, we use 34,593 unique requests (46.1\% malicious).
+
+\textbf{HttpParamsDataset (payloads).} The dataset contains 31,067 parameters, which are labeled as either normal, SQLi, XSS, command injection or path traversal. This dataset has a train/test split~\cite{httpparams}. Any test payload that is present in the training set will be removed.
+
+\textbf{SR-BH 2020 (requests).} In July of 2020, there were 907,814 requests made to an Internet-facing WordPress installation. These requests had multiple CAPEC labels~\cite{srbh2022}. Since dictionary password guessing is content-identical to normal logins, we have removed the 836 requests that were labeled with only CAPEC-16. Manual review of the 90,306 unique "normal" requests indicated that 69,008 (76\%) contained either OWASP ZAP scanner activity or had injection character(s) in the URL path, such as \texttt{/blog";cat /etc/passwd;"/wp-content} and OWASP ZAP marker \texttt{zApPX}. We removed these requests based upon a set of defined, independent detection criteria.
+
+\textbf{Merged Request Dataset} The CSIC 2010 and the cleaned SR-BH 2020 have been merged into a single schema. That is, Method, Path, Query, Body, Content Type, Label (binary), Attack Type and Source. All requests from both sources were de-duplicated and the SR-BH was sampled 50/50 normal vs. attack to ensure that neither source dominated and there was no label information contained in the Source field.
+
 
 \section{Method}
 
 \subsection{Flow-level detectors}
-Logistic regression (LR), linear SVM, random forest (RF), histogram gradient boosting, XGBoost~\cite{xgboost}
-and an MLP are trained with class balancing; the linear models and the MLP get signed-log and standardised
-features. The conventional baseline follows Denning~\cite{denning1987}. It learns each feature's benign
-0.5--99.5th percentile range and raises an alarm when at least $m$ features are out of range, with $m$
-chosen for a 1\% false-alarm budget. Flow records carry no payload for signature rules to
-match, so per-metric thresholds are the conventional signature-free option at this level.
+
+Logistic regression (LR), linear SVM, random forest (RF), histogram gradient boosting, XGBoost~\cite{xgboost} and an MLP are trained with class balancing; the linear models and the MLP get signed-log and standardised features. The conventional baseline follows Denning~\cite{denning1987}. It learns each feature's benign 0.5--99.5th percentile range and raises an alarm when at least $m$ features are out of range, with $m$ chosen for a 1\% false-alarm budget. Flow records carry no payload for signature rules to match, so per-metric thresholds are the conventional signature-free option at this level.
 
 \subsection{Request features}
-Every value is URL-decoded up to twice, so that double-encoded payloads are seen. Headers that identify
-a tool or a session (User-Agent, Cookie, Host, X-ZAP-Scan-ID, \dots) are never model input, so a
-detector cannot learn to recognise the scanner instead of the attack. The 35 base features
-follow the brief's four groups:
-\emph{URL} (method, path length and depth, unusual characters, backup-file extensions, traversal),
-\emph{parameters} (count, query/body length, longest and mean value, \%-encoding, double encoding),
-\emph{headers} (special characters and attack keywords in content-bearing headers) and
-\emph{content} (special characters, quotes, brackets, comment markers, character ratios, entropy, and
-SQL, XSS, traversal, command and SSI/template keyword counts).
-Nine \emph{engineered} features describe how a value is built: the longest run of special characters,
-function-call patterns, character-class switches per character, encoding tricks (\texttt{0x}, \texttt{\&\#},
-\texttt{char(}), mixed-case keywords (\texttt{SeLeCt}), keyword density, tokens, the non-alphanumeric
-share and URLs inside values.
-Finally, a \emph{learned application profile} in the spirit of Kruegel and Vigna~\cite{kruegel2003}
-is fitted on benign training requests only. For every endpoint and parameter it learns the normal
-value length, character set and character classes. A request is then described by an unseen
-endpoint, unseen parameters, a length z-score, unseen characters and unseen character classes.
+
+Every value is URL-decoded up to twice, so that double-encoded payloads are seen. Headers that identify a tool or a session (User-Agent, Cookie, Host, X-ZAP-Scan-ID, \dots) are never model input, so a detector cannot learn to recognise the scanner instead of the attack. The 35 base features follow the brief's four groups: \emph{URL} (method, path length and depth, unusual characters, backup-file extensions, traversal), \emph{parameters} (count, query/body length, longest and mean value, \%-encoding, double encoding), \emph{headers} (special characters and attack keywords in content-bearing headers) and \emph{content} (special characters, quotes, brackets, comment markers, character ratios, entropy, and SQL, XSS, traversal, command and SSI/template keyword counts). Nine \emph{engineered} features describe how a value is built: the longest run of special characters, function-call patterns, character-class switches per character, encoding tricks (\texttt{0x}, \texttt{\&\#}, \texttt{char(}), mixed-case keywords (\texttt{SeLeCt}), keyword density, tokens, the non-alphanumeric share and URLs inside values.
+
+Finally, a \emph{learned application profile} in the spirit of Kruegel and Vigna~\cite{kruegel2003} is fitted on benign training requests only. For every endpoint and parameter it learns the normal value length, character set and character classes. A request is then described by an unseen endpoint, unseen parameters, a length z-score, unseen characters and unseen character classes.
+
 
 \subsection{Request models and regularisation}
-LR, RF and XGBoost use the features. An NLP model, a TF-IDF of character 1--4-grams of the decoded request
-followed by a linear SVM (``char-SVM''), learns payload fragments directly, and a \emph{hybrid} SVM combines
-both. All preprocessing (scaling, log transform, profile, TF-IDF, feature selection) is part of a
-scikit-learn pipeline~\cite{sklearn}, so it is re-fitted inside every training fold.
-Hyperparameters are chosen by inner three-fold cross-validation on the training split only:
-LR penalty (L2, elastic net, L1) and strength $C$ with an optional correlation filter;
-RF depth, leaf size and features per split; XGBoost depth, minimum child weight, L1/L2 leaf
-penalties, shrinkage and subsampling (30 random draws); and $C$ for the SVMs.
-The conventional request baseline is a set of 31 signature rules modelled on the CRS families.
+
+LR, RF and XGBoost use the features. An NLP model, a TF-IDF of character 1--4-grams of the decoded request followed by a linear SVM (``char-SVM''), learns payload fragments directly, and a \emph{hybrid} SVM combines both. All preprocessing (scaling, log transform, profile, TF-IDF, feature selection) is part of a scikit-learn pipeline~\cite{sklearn}, so it is re-fitted inside every training fold. Hyperparameters are chosen by inner three-fold cross-validation on the training split only: LR penalty (L2, elastic net, L1) and strength $C$ with an optional correlation filter; RF depth, leaf size and features per split; XGBoost depth, minimum child weight, L1/L2 leaf penalties, shrinkage and subsampling (30 random draws); and $C$ for the SVMs. The conventional request baseline is a set of 31 signature rules modelled on the CRS families.
 
 \subsection{Prototype}
-The deployed analyser scores \emph{parameter values}, not whole requests. Each query, form, JSON,
-unusual path segment and content-bearing header value is classified by an ensemble of a calibrated
-char-SVM and XGBoost, both trained on HttpParamsDataset, into normal, SQLi, XSS, path traversal or
-command injection. The most suspicious value gives the request's attack probability $p$ and class $c$.
-Risk is $p\cdot s_c$ with severity $s_c$ (SQLi and command injection 1.0, path traversal 0.8, XSS 0.7),
-mapped to High/Medium/Low. Each finding is explained by the signature rules that fired and by
-features beyond the 99th percentile of benign values. These explanations cost no extra model
-evaluations, unlike SHAP or LIME~\cite{fasla2026}. Like AutoRed~\cite{khairmode2026}, the prototype
-never exploits a finding; confirmation is left to the scanner and the tester. Findings are grouped by endpoint, parameter
-and class and ranked by maximum risk $\times \log(1+\text{requests})$. A Streamlit interface analyses
-pasted requests, uploaded traffic (proxy logs, HAR, CSV, raw requests or access logs) and
-CICFlowMeter files.
+
+% The deployed analyser scores \emph{parameter values}, not whole requests. Each query, form, JSON, unusual path segment and content-bearing header value is classified by an ensemble of a calibrated char-SVM and XGBoost, both trained on HttpParamsDataset, into normal, SQLi, XSS, path traversal or command injection. The most suspicious value gives the request's attack probability $p$ and class $c$. Risk is $p\cdot s_c$ with severity $s_c$ (SQLi and command injection 1.0, path traversal 0.8, XSS 0.7), mapped to High/Medium/Low. Each finding is explained by the signature rules that fired and by features beyond the 99th percentile of benign values. These explanations cost no extra model evaluations, unlike SHAP or LIME~\cite{fasla2026}. Like AutoRed~\cite{khairmode2026}, the prototype never exploits a finding; confirmation is left to the scanner and the tester. Findings are grouped by endpoint, parameter and class and ranked by maximum risk $\times \log(1+\text{requests})$. A Streamlit interface analyses pasted requests, uploaded traffic (proxy logs, HAR, CSV, raw requests or access logs) and CICFlowMeter files.The source code for the AI-assisted assessment prototype described in this section is available in the project’s GitHub repository https://github.com/y0usSs3F/AI-Assisted-Web-Application-Penetration-Testing.
+
+The deployed analyzer evaluates the parameters of each request rather than evaluating the entire request. An ensemble of a calibrated character-SVM and XGBoost (both developed using HttpParamsDataset) classifies every query, form, JSON, unusual path segments, and content-containing headers as either being normal, SQL injection (SQLi), Cross-Site Scripting (XSS), Directory Traversal (path traversal), or Command Injection. The highest probability of a finding being an attack ($p$) and the type of finding ($c$) determine the probability that the request was an attack. The risk associated with the finding is calculated as $p \times s_c$, where $s_c$ represents the severity rating for each finding type (SQLi and Command Injection have a severity rating of 1.0, Directory Traversal has a severity rating of 0.8, and XSS has a severity rating of 0.7). Risk ratings are then categorized into High/Medium/Low categories. Signature rules that triggered each finding along with features that exceeded the 99th percentile of those found in non-attack requests provide explanation for each finding. Explanations do not require additional model evaluations similar to SHAP or LIME\cite{fasla2026}. Similar to AutoRed\cite{khairmode2026}, the prototype does not exploit any findings. It is up to the scanner and tester to confirm whether a finding is actually a vulnerability. Findings are organized by endpoint, parameter, and category, and ordered based upon the maximum risk times the natural logarithm of the number of requests plus one. A Streamlit user interface allows users to input requests through copy/paste, upload traffic files such as proxy logs, HTTP archive (HAR), comma-separated values (CSV), raw request files, or access log files, and input flow meter files generated using CICFlowMeter. Source code for the AI-assisted assessment prototype discussed in this section can be accessed via the project's GitHub repository https://github.com/y0usSs3F/AI-Assisted-Web-Application-Penetration-Testing.
 
 \subsection{Evaluation protocol}
-Attacks are a minority in every dataset, and accuracy rewards a detector that predicts ``benign''
-for everything~\cite{fasla2026}. We therefore report F1, recall and the false-positive rate (FPR),
-and accuracy only when comparing with published results.
-CIC and CSIC use a stratified 80/20 held-out split plus stratified five-fold cross-validation
-(seed 42). Robustness is tested with unseen attack types (leave one attack type out), timing evasion
-(inter-arrival features scaled by 2--100$\times$), an unseen benign day and cross-dataset testing.
-Four checks target false accuracy: \textbf{S1}, training on shuffled labels (must fall to chance);
-\textbf{S2}, test requests that are near-duplicates of training requests (equal up to digits and case),
-with re-scoring on novel requests only; \textbf{S3}, bootstrap 95\% confidence intervals; and
-\textbf{S4}, a model that sees only request structure (method, lengths, counts) and no content.
+
+Attacks are a minority in every dataset, and accuracy rewards a detector that predicts ``benign'' for everything~\cite{fasla2026}. We therefore report F1, recall and the false-positive rate (FPR), and accuracy only when comparing with published results. CIC and CSIC use a stratified 80/20 held-out split plus stratified five-fold cross-validation (seed 42). Robustness is tested with unseen attack types (leave one attack type out), timing evasion (inter-arrival features scaled by 2--100$\times$), an unseen benign day and cross-dataset testing. Four checks target false accuracy: \textbf{S1}, training on shuffled labels (must fall to chance); \textbf{S2}, test requests that are near-duplicates of training requests (equal up to digits and case), with re-scoring on novel requests only; \textbf{S3}, bootstrap 95\% confidence intervals; and \textbf{S4}, a model that sees only request structure (method, lengths, counts) and no content.
 
 \textbf{Lab.} On one machine, OWASP Juice Shop 20.3~\cite{juiceshop} runs behind a logging reverse proxy
 on the loopback interface. Phase~A: 60 simulated shoppers browse, register, log in, fill baskets, post
@@ -551,7 +456,7 @@ the endpoints it ranks highest.
 \bibitem{srbh2022} T.~Sureda Riera, J.~R. Bermejo Higuera, J.~Bermejo Higuera, J.~A. Sicilia Montalvo, and J.~J. Mart\'inez Herr\'aiz, ``A new multi-label dataset for web attacks CAPEC classification using machine learning techniques,'' \emph{Computers \& Security}, vol.~120, art.~102788, 2022, doi: 10.1016/j.cose.2022.102788.
 \bibitem{xgboost} T.~Chen and C.~Guestrin, ``XGBoost: A scalable tree boosting system,'' in \emph{Proc. 22nd ACM SIGKDD}, 2016, pp.~785--794.
 \bibitem{sklearn} F.~Pedregosa \emph{et al.}, ``Scikit-learn: Machine learning in Python,'' \emph{J. Mach. Learn. Res.}, vol.~12, pp.~2825--2830, 2011.
-\bibitem{juiceshop} OWASP Foundation, ``OWASP Juice Shop,'' version 20.3. [Online]. Available: \url{https://owasp.org/www-project-juice-shop/}
+\bibitem{juiceshop} OWASP Foundation, ``OWASP Juice Ssnhop,'' version 20.3. [Online]. Available: \url{https://owasp.org/www-project-juice-shop/}
 \end{thebibliography}
 
 \end{document}
